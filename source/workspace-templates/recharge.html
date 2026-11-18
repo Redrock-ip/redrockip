@@ -1,0 +1,43 @@
+<div class="ws-recharge">
+  <div class="workspace-heading">
+    <div><div class="eyebrow">ACCOUNT / ADD FUNDS</div><h1>账户充值</h1><p>选择金额与支付方式，再前往原站确认支付。</p></div>
+    <div class="workspace-heading-actions"><a class="workspace-secondary" href="https://redrock-ip.com/dashboard/recharge" target="_blank" rel="noopener noreferrer">打开原站充值 ↗</a></div>
+  </div>
+
+  <section class="ws-recharge-balance ws-panel" aria-label="账户余额">
+    <span class="ws-recharge-balance-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7H6a2 2 0 0 1 0-4h12v4M4 7v12a2 2 0 0 0 2 2h14V7Z"/><path d="M20 11h-6v5h6M16 13.5h.01"/></svg></span>
+    <div><span>当前余额</span><strong>—</strong></div><p>未接入账户余额</p><span class="ws-recharge-state">未接入</span>
+  </section>
+
+  <div class="ws-recharge-layout">
+    <section class="ws-panel ws-recharge-config" aria-labelledby="recharge-config-title">
+      <div class="ws-recharge-panel-heading"><div><span class="ws-recharge-kicker">01 / CONFIGURE</span><h2 id="recharge-config-title">选择充值金额</h2></div><span class="ws-recharge-muted">原站范围 $10–$2,000</span></div>
+      <form id="recharge-form" novalidate aria-describedby="recharge-form-note">
+        <fieldset class="ws-recharge-presets"><legend>快捷金额</legend><div class="ws-recharge-preset-grid">
+          <button type="button" data-recharge-amount="10" aria-pressed="false">$10</button><button type="button" data-recharge-amount="50" aria-pressed="true">$50</button><button type="button" data-recharge-amount="100" aria-pressed="false">$100</button><button type="button" data-recharge-amount="200" aria-pressed="false">$200</button><button type="button" data-recharge-amount="500" aria-pressed="false">$500</button><button type="button" data-recharge-amount="1000" aria-pressed="false">$1,000</button><button type="button" data-recharge-amount="2000" aria-pressed="false">$2,000</button>
+        </div></fieldset>
+        <div class="ws-field ws-recharge-amount-field"><label for="recharge-amount">自定义金额</label><div class="ws-recharge-input-wrap"><span aria-hidden="true">$</span><input id="recharge-amount" name="amount" type="number" value="50" min="10" max="2000" step="0.01" inputmode="decimal" autocomplete="off" required aria-describedby="recharge-amount-help recharge-error"></div><p id="recharge-amount-help">输入 $10–$2,000，最多保留两位小数。</p><p id="recharge-error" class="ws-recharge-error" role="alert" hidden></p></div>
+        <fieldset class="ws-recharge-methods"><legend>支付方式</legend><div class="ws-recharge-method-grid">
+          <label class="ws-recharge-method"><input type="radio" name="recharge-method" value="online" checked><span class="ws-recharge-method-symbol" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18M7 15h4"/></svg></span><span><strong>在线支付</strong><small>在原站确认可用通道</small></span></label>
+          <label class="ws-recharge-method"><input type="radio" name="recharge-method" value="crypto"><span class="ws-recharge-method-symbol" aria-hidden="true">₮</span><span><strong>USDT (TRC-20)</strong><small>TRON 主网</small></span></label>
+        </div></fieldset>
+        <p id="recharge-method-note" class="ws-recharge-method-note">可用支付通道与精确金额以原站确认页为准。</p>
+        <button class="ws-button ws-recharge-preview" id="recharge-preview" type="submit" disabled>预览充值信息 <span aria-hidden="true">→</span></button>
+        <p id="recharge-form-note" class="ws-recharge-form-note">此页仅预览信息，不生成充值订单或支付地址。</p>
+        <noscript><p class="ws-recharge-error">请启用 JavaScript 预览信息，或直接打开原站充值。</p></noscript>
+      </form>
+    </section>
+
+    <aside class="ws-panel ws-recharge-summary" aria-labelledby="recharge-summary-title">
+      <span class="ws-recharge-kicker">02 / REVIEW</span><h2 id="recharge-summary-title">充值信息</h2><p class="ws-recharge-muted">核对金额，了解支付方式。</p>
+      <div class="ws-recharge-summary-total"><span>选择金额</span><strong id="recharge-summary-amount">$50.00</strong></div>
+      <dl class="ws-recharge-summary-list"><div><dt>支付方式</dt><dd id="recharge-summary-method">在线支付</dd></div><div id="recharge-network-row" hidden><dt>支付网络</dt><dd>TRC-20</dd></div><div><dt>实际支付金额</dt><dd>以原站确认页为准</dd></div></dl>
+      <div class="ws-recharge-next"><span class="ws-recharge-next-icon" aria-hidden="true">↗</span><div><strong>确认后，在原站继续</strong><p>登录原站后创建充值订单，再核对支付地址、网络与金额。到账状态以系统确认为准。</p></div></div>
+      <a class="ws-recharge-help" href="../contact.html">有充值问题？联系支持 ↗</a>
+    </aside>
+  </div>
+
+  <section class="ws-panel ws-recharge-history" aria-labelledby="recharge-history-title"><div class="ws-recharge-panel-heading"><div><span class="ws-recharge-kicker">RECENT ACTIVITY</span><h2 id="recharge-history-title">充值记录</h2></div><a href="https://redrock-ip.com/dashboard/orders" target="_blank" rel="noopener noreferrer">在原站查看记录 ↗</a></div><div class="ws-recharge-history-empty"><span aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6Z"/><path d="M14 3v5h5M9 12h7M9 16h5"/></svg></span><h3>尚未接入充值记录</h3><p>登录原站后查看真实订单与支付状态。</p></div></section>
+
+  <dialog class="ws-recharge-dialog" id="recharge-review-dialog" aria-labelledby="recharge-review-title" aria-describedby="recharge-review-note"><button type="button" id="recharge-review-close" class="ws-recharge-dialog-close" aria-label="关闭充值预览">×</button><span class="ws-recharge-kicker">PREVIEW / ADD FUNDS</span><h2 id="recharge-review-title">确认充值信息</h2><p id="recharge-review-note">以下仅为信息预览，尚未创建充值订单。</p><div class="ws-recharge-dialog-amount"><span>选择金额</span><strong id="recharge-review-amount">$50.00</strong></div><dl class="ws-recharge-summary-list"><div><dt>支付方式</dt><dd id="recharge-review-method">在线支付</dd></div><div id="recharge-review-network-row" hidden><dt>支付网络</dt><dd>TRC-20</dd></div></dl><p class="ws-recharge-dialog-note">请在原站确认精确支付金额与可用通道。本预览不会提交付款。</p><div class="ws-recharge-dialog-actions"><a class="ws-button" href="https://redrock-ip.com/dashboard/recharge" target="_blank" rel="noopener noreferrer">前往原站充值 ↗</a><button type="button" class="workspace-secondary" id="recharge-review-edit">继续修改</button><button type="button" id="recharge-demo-confirm" class="ws-button" hidden>确认模拟充值</button></div><p class="demo-status" id="recharge-demo-status" role="status"></p></dialog>
+</div>

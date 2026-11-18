@@ -1,0 +1,39 @@
+<section class="ws-panel service-traffic-filter" aria-label="不限量明细筛选">
+  <div class="ws-field service-traffic-key">
+    <label for="traffic-key">不限量密钥</label>
+    <select id="traffic-key" disabled><option value="">全部密钥（含历史）</option></select>
+  </div>
+  <div class="service-traffic-ranges" role="group" aria-label="明细时间范围">
+    <button class="ws-button" type="button" data-traffic-range="1h" aria-pressed="true" disabled>1H</button>
+    <button class="ws-button" type="button" data-traffic-range="2h" aria-pressed="false" disabled>2H</button>
+    <button class="ws-button" type="button" data-traffic-range="24h" aria-pressed="false" disabled>24H</button>
+    <button class="ws-button" type="button" data-traffic-range="3d" aria-pressed="false" disabled>3D</button>
+    <button class="ws-button" type="button" id="traffic-refresh" disabled>刷新</button>
+  </div>
+</section>
+<p id="traffic-status" class="service-traffic-status" role="status">流量明细暂不可用。</p>
+<div id="traffic-results" hidden>
+  <div class="service-traffic-metrics" aria-label="区间数据">
+    <article class="ws-kpi"><span>总流量</span><strong id="traffic-total">—</strong><small id="traffic-directions"></small></article>
+    <article class="ws-kpi"><span>平均带宽</span><strong id="traffic-average">—</strong></article>
+    <article class="ws-kpi"><span>峰值带宽</span><strong id="traffic-peak">—</strong></article>
+    <article class="ws-kpi"><span>最大连接数</span><strong id="traffic-max-connections">—</strong></article>
+  </div>
+  <div class="service-layout service-traffic-charts">
+    <section class="ws-panel" aria-labelledby="traffic-bandwidth-title">
+      <h2 id="traffic-bandwidth-title">带宽趋势（UTC+8）</h2>
+      <div id="traffic-bandwidth"></div>
+      <ul class="service-traffic-legend" aria-label="带宽指标">
+        <li>总带宽（Mbps）</li><li>下载</li><li>上传</li>
+      </ul>
+    </section>
+    <section class="ws-panel" aria-labelledby="traffic-connections-title">
+      <h2 id="traffic-connections-title">连接趋势（UTC+8）</h2>
+      <div id="traffic-connections"></div>
+      <ul class="service-traffic-legend" aria-label="连接指标">
+        <li>最大连接数</li><li>活跃连接数</li>
+      </ul>
+    </section>
+  </div>
+  <p id="traffic-chart-empty" class="ws-empty" hidden>所选范围暂无趋势数据。</p>
+</div>

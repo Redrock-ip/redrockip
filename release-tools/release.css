@@ -1,0 +1,11 @@
+.release-status {
+  margin: 0.7rem 0 1rem;
+  color: #e0cbd0;
+  font-size: 0.9rem;
+}
+.release-status[hidden] { display: none; }
+button:disabled,
+input:disabled,
+select:disabled {
+  cursor: not-allowed;
+}

@@ -1,0 +1,178 @@
+[
+  {
+    "id": "dynamic",
+    "name": "动态住宅代理",
+    "en": "ROTATING RESIDENTIAL",
+    "route": "proxy-generator",
+    "family": "residential",
+    "icon": "rotating-home",
+    "desc": "按配置轮换住宅网络出口，适用于需要切换连接出口的数据访问任务。",
+    "tags": [
+      "轮换住宅出口",
+      "数据访问"
+    ],
+    "scenario": "公开数据采集、价格观察、市场研究",
+    "focus": "核对轮换规则、会话时长、流量包和可用地区。",
+    "checks": [
+      "确认所需地区与可用资源",
+      "了解轮换方式与会话保持规则",
+      "核对流量包有效期与用量口径"
+    ],
+    "billing": "按流量查看，单位 GB",
+    "pricing": "dynamic"
+  },
+  {
+    "id": "static",
+    "name": "静态住宅代理",
+    "en": "STATIC RESIDENTIAL",
+    "route": "static-proxies",
+    "family": "residential",
+    "icon": "fixed-home",
+    "desc": "采用相对固定的住宅网络出口，适用于需要保持会话连续性的业务。",
+    "tags": [
+      "固定出口",
+      "持续会话"
+    ],
+    "scenario": "持续会话、业务系统访问、网站体验检查",
+    "focus": "先确认地区、IP 分配与使用期限，再在业务环境中测试。",
+    "checks": [
+      "确认地区与计划 IP 数量",
+      "核对使用期限与续费规则",
+      "验证固定出口与会话需求的适配性"
+    ],
+    "billing": "按 IP 与所选使用期限查看",
+    "pricing": "static"
+  },
+  {
+    "id": "mobile",
+    "name": "移动代理",
+    "en": "MOBILE PROXIES",
+    "route": "mobile-generator",
+    "family": "mobile",
+    "icon": "mobile-signal",
+    "desc": "通过移动网络建立连接，用于移动端体验检查与应用测试。",
+    "tags": [
+      "移动网络",
+      "应用测试"
+    ],
+    "scenario": "移动应用测试、页面检查、广告展示观察",
+    "focus": "确认所需地区、网络类型与测试工具的接入方式。",
+    "checks": [
+      "确认可选地区及网络类型",
+      "核对会话配置与接入协议",
+      "了解流量规则和测试需求"
+    ],
+    "billing": "按流量查看，单位 GB",
+    "pricing": "mobile"
+  },
+  {
+    "id": "datacenter",
+    "name": "数据中心代理",
+    "en": "DATACENTER PROXIES",
+    "route": "datacenter-proxies",
+    "family": "datacenter",
+    "icon": "server-rack",
+    "desc": "通过数据中心网络建立连接，适用于授权自动化任务和常规数据访问。",
+    "tags": [
+      "机房网络",
+      "自动化任务"
+    ],
+    "scenario": "系统联调、授权自动化、常规数据访问",
+    "focus": "适用于不要求住宅或移动网络环境的工作流程。",
+    "checks": [
+      "确认地区、IP 数量和服务期限",
+      "核对协议与认证方式",
+      "在目标服务的访问规则内测试"
+    ],
+    "billing": "按 IP 与所选使用期限查看",
+    "pricing": "datacenter"
+  },
+  {
+    "id": "static-daily",
+    "name": "静态住宅日租",
+    "en": "DAILY RESIDENTIAL",
+    "route": "static-daily-proxies",
+    "family": "residential",
+    "icon": "daily-calendar",
+    "desc": "按地区与有效期选择日租静态住宅套餐，查看连接信息和到期时间。",
+    "tags": [
+      "日租套餐",
+      "静态住宅"
+    ],
+    "scenario": "按任务周期安排的住宅网络访问",
+    "focus": "以所选套餐的有效期为准，提前确认续用与到期安排。",
+    "checks": [
+      "选择地区及计划 IP 数量",
+      "核对套餐有效期与到期时间",
+      "确认连接、续用与更换规则"
+    ],
+    "billing": "按 IP 查看，套餐有效期另列",
+    "pricing": null
+  },
+  {
+    "id": "live",
+    "name": "直播专线",
+    "en": "LIVE CONNECTION",
+    "route": "live-proxies",
+    "family": "special",
+    "icon": "live-video",
+    "desc": "面向直播场景的 IP 方案，按地区与使用期限选择配置。",
+    "tags": [
+      "直播场景",
+      "专线配置"
+    ],
+    "scenario": "直播任务的网络出口配置与连接管理",
+    "focus": "结合实际直播平台、地区和工作流程确认方案适配性。",
+    "checks": [
+      "确认目标地区与直播使用场景",
+      "核对 IP 数量和使用期限",
+      "查看连接信息并完成场景测试"
+    ],
+    "billing": "按 IP 查看，套餐期限另列",
+    "pricing": null
+  },
+  {
+    "id": "unlimited",
+    "name": "动态不限量",
+    "en": "BANDWIDTH PLANS",
+    "route": "unlimited-proxies",
+    "family": "special",
+    "icon": "unlimited-infinity",
+    "desc": "按带宽档位与使用时长选择套餐，通过 Unlimited KEY 管理代理配置。",
+    "tags": [
+      "带宽档位",
+      "时长套餐"
+    ],
+    "scenario": "按带宽与时间规划的代理访问任务",
+    "focus": "“不限量”的适用范围与限制，需要结合具体套餐和服务约定确认。",
+    "checks": [
+      "确认带宽档位及小时或天套餐",
+      "了解 KEY、会话和地区配置",
+      "核对套餐适用范围与使用规则"
+    ],
+    "billing": "按所选小时或天套餐，带宽档位另列",
+    "pricing": null
+  },
+  {
+    "id": "short",
+    "name": "短效住宅",
+    "en": "SHORT-TERM RESIDENTIAL",
+    "route": "short-dynamic-proxies",
+    "family": "residential",
+    "icon": "short-hourglass",
+    "desc": "按 IP 数量额度选购并生成短效住宅代理，查看生成记录及到期时间。",
+    "tags": [
+      "IP 数量额度",
+      "短效出口"
+    ],
+    "scenario": "按任务批次生成住宅代理的工作流程",
+    "focus": "实际可用期限以生成记录和所选套餐为准。",
+    "checks": [
+      "确认所需地区与生成数量",
+      "核对 IP 数量额度与使用方式",
+      "查看生成记录和到期信息"
+    ],
+    "billing": "按 IP 数量额度查看",
+    "pricing": null
+  }
+]

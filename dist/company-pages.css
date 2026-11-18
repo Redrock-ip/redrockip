@@ -1,0 +1,200 @@
+/* Company, contact and help-center page styles. */
+.company-search-input { display: flex; align-items: center; gap: 16px; }
+.company-search-input input { flex: 1; min-width: 0; }
+.company-search-input button { flex: none; }
+.company-faq-layout { display: grid; grid-template-columns: 232px minmax(0,1fr); gap: 48px; }
+.site-main[data-page="about"] .section-heading { display: block; }
+.site-main[data-page="about"] .section-heading h2 { margin: 15px 0 13px; }
+.site-main[data-page="about"] .section-heading>p { max-width: 700px; color: #a09b9b; font-size: 13px; line-height: 1.9; }
+/* Shared company/help pages: no dependency on homepage artwork. */
+.site-main[data-page="faq"], .site-main[data-page="about"], .site-main[data-page="contact"] { background: #050505; color: #f3f1ef; }
+.site-main[data-page="faq"] [hidden], .site-main[data-page="about"] [hidden], .site-main[data-page="contact"] [hidden] { display: none !important; }
+.company-faq-search { margin-bottom: 36px; }
+.company-search-field { max-width: 100%; margin: 0; }
+.company-search-input { position: relative; display: flex; align-items: center; gap: 12px; }
+.company-search-input input { width: 100%; padding-right: 68px; }
+.company-search-input #faq-clear { position: absolute; right: 14px; border: 0; background: transparent; padding: 8px 0; color: #ef8b85; font-size: 12px; }
+.company-faq-search .status-message { margin: 12px 0 0; }
+.company-faq-search::after { content: '按关键词查找，也可以从下方选择问题分类。'; display: block; color: #a09b9b; font-size: 12px; margin-top: 12px; }
+.company-faq-search .form-field label { margin-bottom: 12px; display: block; }
+.company-faq-filters { display: grid; gap: 4px; }
+.company-faq-filters button { display: flex; justify-content: space-between; align-items: center; width: 100%; border: 1px solid transparent; border-left: 2px solid transparent; padding: 15px 16px; background: transparent; color: #a09b9b; text-align: left; transition: background .2s, color .2s, border-color .2s; }
+.company-faq-filters button span { font-family: 'DM Sans',sans-serif; font-size: 11px; color: #8b8184; }
+.company-faq-filters button:hover { background: #161113; color: #f3f1ef; }
+.company-faq-filters button[aria-pressed="true"] { color: #fff; border-left-color: #ef4444; background: #251015; }
+.company-faq-filters button[aria-pressed="true"] span { color: #f18a85; }
+.company-faq-filters button:focus-visible { outline: 2px solid #ef4444; outline-offset: 3px; }
+.company-faq-search { grid-column: 1/-1; }
+.company-faq-search .company-search-input { width: 100%; }
+.company-faq-search input { background: #090809; border: 1px solid #3c3035; padding: 15px 70px 15px 17px; color: #f3f1ef; border-radius: 0; font: inherit; }
+.company-faq-search input:focus { outline: 2px solid #ef4444; outline-offset: 2px; }
+.company-faq-results { min-width: 0; }
+.company-faq-group { margin-bottom: 46px; }
+.company-faq-group:last-child { margin-bottom: 0; }
+.company-faq-group-heading { display: flex; align-items: center; gap: 18px; margin-bottom: 17px; }
+.company-faq-group-heading>span { color: #e9817b; font-size: 11px; }
+.company-faq-group-heading h2 { font-size: 21px; font-weight: 500; margin: 0; line-height: 1.5; letter-spacing: -.4px; }
+.company-faq-results details { border-top: 1px solid #252223; background: transparent; }
+.company-faq-results details:last-child { border-bottom: 1px solid #252223; }
+.company-faq-results details[open] { background: #100c0e; }
+.company-faq-results summary { padding: 23px 18px; gap: 22px; line-height: 1.75; font-size: 14px; display: flex; justify-content: space-between; cursor: pointer; list-style: none; }
+.company-faq-results summary::-webkit-details-marker { display: none; }
+.company-faq-results summary>span { color: #ef8b85; font-size: 19px; flex: none; transition: transform .2s; }
+.company-faq-results details[open] summary>span { transform: rotate(45deg); }
+.company-faq-results summary:hover { color: #ffa39b; }
+.company-faq-results summary:focus-visible { outline: 2px solid #ef4444; outline-offset: -2px; }
+.company-faq-answer { padding: 0 18px 25px; color: #aaa2a5; font-size: 13px; line-height: 1.95; }
+.company-faq-answer p { margin: 0 0 12px; max-width: 780px; }
+.company-faq-answer p:last-child { margin: 0; }
+.company-faq-answer .text-link { display: inline-block; color: #f1c4c1; font-size: 12px; }
+.company-faq-sidebar { min-width: 0; }
+.company-faq-help { border-top: 1px solid #252223; padding-top: 22px; margin-top: 28px; font-size: 12px; }
+.company-faq-help p { color: #a09b9b; margin: 0 0 10px; }
+.company-faq-help a { color: #f1c4c1; }
+.company-faq-empty { padding: 42px 25px; border: 1px dashed #3e2a32; }
+.company-faq-empty h2 { font-size: 24px; margin: 14px 0 12px; }
+.company-faq-empty p { color: #a09b9b; font-size: 13px; }
+.company-support-banner { display: flex; justify-content: space-between; align-items: center; gap: 32px; background: linear-gradient(105deg,#221015,#0e0d0e); }
+.company-support-banner h2 { font-size: 27px; font-weight: 500; margin: 14px 0 10px; }
+.company-support-banner p { font-size: 13px; margin: 0; }
+.company-support-banner>.button { flex: none; }
+.company-outline-button { display: inline-flex; justify-content: center; align-items: center; min-height: 45px; border: 1px solid #5c3c46; padding: 11px 17px; background: #110c0f; color: #f0dce1; font: inherit; font-size: 12px; cursor: pointer; }
+.company-outline-button:hover { border-color: #ef7373; background: #251016; }
+.company-outline-button:disabled { opacity: .5; cursor: default; }
+.company-quiet-button { border: 0; padding: 9px 0; background: none; color: #eeaaa5; font: inherit; font-size: 12px; cursor: pointer; }
+.company-quiet-button:hover { color: #fff; }
+.company-about-statement { display: grid; grid-template-columns: 1fr 1.55fr; gap: 65px; align-items: start; }
+.company-section-label { padding-top: 12px; }
+.company-section-label p { margin: 22px 0 0; font-size: 19px; line-height: 1.8; color: #c7bfc2; }
+.company-statement-panel h2 { font-size: 33px; font-weight: 500; line-height: 1.65; letter-spacing: -.8px; margin: 0 0 22px; }
+.company-statement-panel>p { color: #a09b9b; line-height: 1.95; font-size: 13px; margin: 18px 0 0; }
+.company-about-products { grid-template-columns: repeat(4,minmax(0,1fr)); }
+.company-about-products .card { display: flex; flex-direction: column; padding: 27px 23px; min-height: 265px; }
+.company-card-number { color: #e88881; font-size: 9px; letter-spacing: 1px; }
+.company-about-products h3 { font-size: 19px; font-weight: 500; margin: 28px 0 14px; }
+.company-about-products p { color: #a09b9b; font-size: 12px; line-height: 1.9; margin: 0 0 24px; }
+.company-about-products .text-link { margin-top: auto; color: #e9b8b4; font-size: 12px; }
+.company-about-principles { border-top: 1px solid #252223; }
+.company-about-principles article { display: grid; grid-template-columns: 95px minmax(0,1fr); gap: 22px; padding: 28px 0; border-bottom: 1px solid #252223; }
+.company-about-principles article>span { color: #eb8b84; font-size: 12px; padding-top: 5px; }
+.company-about-principles article>div { display: grid; grid-template-columns: 1fr 2fr; gap: 30px; }
+.company-about-principles h3 { font-size: 19px; font-weight: 500; margin: 0; }
+.company-about-principles p { max-width: 680px; color: #a09b9b; font-size: 13px; line-height: 1.9; margin: 0; }
+.company-about-company h2 { font-family: 'DM Sans','Noto Sans SC',sans-serif; font-size: 27px; font-weight: 500; line-height: 1.6; letter-spacing: -.4px; margin: 17px 0 25px; }
+.company-facts { margin: 0; }
+.company-facts>div { display: grid; grid-template-columns: 150px minmax(0,1fr); gap: 20px; padding: 19px 0; border-top: 1px solid #252223; font-size: 13px; }
+.company-facts dt { color: #a09b9b; }
+.company-facts dd { margin: 0; overflow-wrap: anywhere; }
+.company-facts dd a:hover { color: #f38880; }
+.company-facts-note { font-size: 12px; margin-top: 25px; }
+.company-contact-layout { display: grid; grid-template-columns: minmax(0,.9fr) minmax(0,1.5fr); gap: 30px; align-items: start; }
+.company-contact-aside { display: grid; gap: 22px; min-width: 0; }
+.company-contact-aside .panel { padding: 27px; }
+.company-contact-aside h2 { font-size: 21px; line-height: 1.6; font-weight: 500; margin: 16px 0; }
+.company-contact-aside ul { padding-left: 19px; margin: 0; color: #b0a5aa; font-size: 12px; line-height: 1.9; }
+.company-contact-aside li { padding-left: 2px; margin: 10px 0; }
+.company-contact-preparation>p { font-size: 12px; line-height: 1.9; margin: 23px 0 0; }
+.company-contact-shortcut { border-top: 1px solid #252223; padding: 23px 3px; display: flex; flex-wrap: wrap; align-items: center; gap: 14px 25px; font-size: 12px; }
+.company-contact-shortcut>span { color: #a09b9b; }
+.company-contact-email { display: block; font-family: 'DM Sans',sans-serif; font-size: 20px; color: #f5e4e8; letter-spacing: -.5px; overflow-wrap: anywhere; }
+.company-contact-email:hover { color: #ff9e96; }
+.company-contact-email-actions { display: flex; gap: 22px; align-items: center; margin-top: 18px; }
+.company-contact-email-actions .text-link { font-size: 12px; }
+.company-contact-form-panel { min-width: 0; }
+.company-form-heading h2 { font-weight: 500; font-size: 27px; margin: 16px 0 14px; }
+.company-form-heading>p { font-size: 12px; line-height: 1.9; margin: 0 0 30px; }
+.company-contact-form-panel .form-field { margin-bottom: 23px; }
+.company-contact-form-panel label { font-size: 12px; display: block; margin-bottom: 9px; }
+.company-contact-form-panel label>span { color: #ef8b85; }
+.company-contact-form-panel input, .company-contact-form-panel select, .company-contact-form-panel textarea { width: 100%; min-width: 0; border: 1px solid #3b2c32; border-radius: 0; background: #090708; color: #eee8eb; padding: 13px 14px; font: inherit; font-size: 13px; line-height: 1.7; }
+.company-contact-form-panel textarea { resize: vertical; min-height: 150px; }
+.company-contact-form-panel input:focus, .company-contact-form-panel select:focus, .company-contact-form-panel textarea:focus { outline: 2px solid #ef4444; outline-offset: 2px; }
+.company-contact-form-panel ::placeholder { color: #82747a; opacity: 1; }
+.company-form-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 20px; }
+.company-field-note { color: #91858a; font-size: 10px; margin: 8px 0 0; }
+.company-form-bottom { border-top: 1px solid #252223; padding-top: 23px; display: flex; gap: 22px; align-items: center; justify-content: space-between; }
+.company-form-bottom>p { max-width: 235px; font-size: 10px; line-height: 1.9; margin: 0; }
+.company-form-bottom .button { flex: none; font: inherit; font-size: 12px; cursor: pointer; gap: 22px; }
+.company-contact-form-panel .status-message, .company-contact-aside .status-message { min-height: 1.6em; color: #e8aaa4; font-size: 11px; margin: 14px 0 0; overflow-wrap: anywhere; }
+.company-draft-review { border-top: 1px solid #65404b; margin-top: 25px; padding-top: 30px; }
+.company-draft-review h3 { font-size: 23px; font-weight: 500; margin: 12px 0; }
+.company-draft-review>p { font-size: 12px; }
+.company-draft-review dl { margin: 23px 0 14px; font-size: 12px; }
+.company-draft-review dt { color: #a09b9b; margin-bottom: 9px; }
+.company-draft-review dd { margin: 0; overflow-wrap: anywhere; }
+.company-draft-review pre { border: 1px solid #35262d; background: #080607; padding: 19px; white-space: pre-wrap; overflow-wrap: anywhere; font-family: inherit; font-size: 12px; line-height: 1.9; max-height: 450px; overflow: auto; }
+.company-draft-review .inline-actions { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+.company-draft-review .button { font-size: 12px; gap: 20px; }
+.company-draft-review [aria-disabled="true"] { opacity: .5; pointer-events: none; }
+.company-manual-copy { margin-top: 18px; width: 100%; font: inherit; }
+@media (min-width:901px) { .company-faq-sidebar { position: sticky; top: 112px; align-self: start; } }
+@media (max-width:1050px) {
+  .company-about-products { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .company-contact-layout { grid-template-columns: minmax(0,.85fr) minmax(0,1.3fr); gap: 22px; }
+  .company-contact-aside .panel { padding: 23px; }
+  .company-form-grid { gap: 14px; }
+  .company-form-bottom { align-items: flex-start; flex-direction: column; }
+  .company-form-bottom>p { max-width: none; }
+}
+@media (max-width:900px) {
+  .company-faq-layout { grid-template-columns: minmax(0,1fr); gap: 0; }
+  .company-faq-filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+  .company-faq-filters button { width: auto; min-width: 135px; gap: 23px; border: 1px solid #30252b; padding: 10px 14px; }
+  .company-faq-filters button[aria-pressed="true"] { border-color: #a65058; }
+  .company-faq-help { display: none; }
+  .company-about-statement { grid-template-columns: 1fr; gap: 25px; }
+  .company-section-label p { display: none; }
+  .company-contact-layout { grid-template-columns: 1fr; }
+  .company-contact-aside { grid-template-columns: repeat(2,minmax(0,1fr)); align-items: stretch; }
+  .company-contact-shortcut { grid-column: 1/-1; }
+  .company-about-principles article>div { grid-template-columns: 1fr; gap: 12px; }
+  .company-about-principles article { grid-template-columns: 45px minmax(0,1fr); }
+}
+@media (max-width:600px) {
+  .company-faq-search input { font-size: 16px; }
+  .company-faq-search { padding: 20px; margin-bottom: 25px; }
+  .company-faq-search::after { font-size: 10px; }
+  .company-faq-filters { gap: 7px; }
+  .company-faq-filters button { min-width: 0; font-size: 11px; gap: 13px; padding: 9px 11px; }
+  .company-faq-group { margin-bottom: 32px; }
+  .company-faq-group-heading h2 { font-size: 19px; }
+  .company-faq-results summary { padding: 20px 12px; font-size: 13px; gap: 12px; }
+  .company-faq-answer { padding: 0 12px 23px; font-size: 12px; }
+  .company-support-banner { flex-direction: column; align-items: flex-start; gap: 23px; }
+  .company-support-banner h2 { font-size: 23px; }
+  .company-statement-panel h2 { font-size: 26px; }
+  .company-about-products { grid-template-columns: 1fr; }
+  .company-about-products .card { min-height: 0; padding: 24px; }
+  .company-about-products h3 { margin-top: 20px; }
+  .company-about-products p { margin-bottom: 20px; }
+  .company-about-principles article { gap: 14px; grid-template-columns: 27px minmax(0,1fr); padding: 24px 0; }
+  .company-about-principles h3 { font-size: 17px; }
+  .company-about-principles p { font-size: 12px; }
+  .company-about-company h2 { font-size: 21px; }
+  .company-facts>div { grid-template-columns: 1fr; gap: 7px; font-size: 12px; }
+  .company-contact-aside { grid-template-columns: 1fr; }
+  .company-contact-shortcut { padding: 18px 3px 6px; }
+  .company-contact-form-panel { padding: 23px; }
+  .company-form-heading h2 { font-size: 24px; }
+  .company-form-grid { grid-template-columns: 1fr; gap: 0; }
+  .company-contact-form-panel input, .company-contact-form-panel select, .company-contact-form-panel textarea { font-size: 16px; }
+  .company-draft-review pre { padding: 14px; font-size: 11px; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .company-faq-filters button, .company-faq-results summary>span { transition: none; }
+}
+html[data-motion="off"] .company-faq-filters button, html[data-motion="off"] .company-faq-results summary>span { transition: none; }
+
+/* Additional contact channels */
+.company-contact-social h2 { font-size: 22px; margin: 13px 0 23px; }
+.company-social-link { display: flex; align-items: center; gap: 12px; width: 100%; text-align: left; color: #e4d9e0; padding: 13px 0; border: 0; border-top: 1px solid #3e2934; background: transparent; }
+.company-social-link>span:first-child { display: inline-flex; padding: 9px; border: 1px solid #69323f; background: #44132233; border-radius: 9px; color: #f2acb2; }
+.company-social-link svg { display: block; width: 22px; height: 22px; }
+.company-social-link>span:nth-child(2) { flex: 1; }
+.company-social-link strong { display: block; font-size: 13px; font-weight: 500; }
+.company-social-link small { display: block; color: #c3b5bf; font-size: 11px; margin-top: 3px; }
+.company-social-link>b { color: #e1a2af; font-size: 12px; font-weight: 400; }
+.company-social-actions { padding: 0 0 17px 53px; }
+.company-wecom-open { cursor: pointer; font-family: inherit; }
+.company-wecom-open:hover strong { color: #ffb7be; }
+.company-contact-social [data-contact-copy-status] { margin-bottom: 0; }

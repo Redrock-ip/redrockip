@@ -1,0 +1,40 @@
+<section class="ws-affiliate" aria-labelledby="affiliate-title">
+  <div class="workspace-heading">
+    <div><div class="eyebrow">AFFILIATE / YOUR NETWORK</div><h1 id="affiliate-title">推广奖励</h1><p>查看邀请关系与佣金明细，管理你的推广信息。</p></div>
+    <div class="workspace-heading-actions"><button class="workspace-secondary" id="affiliate-mode" type="button" aria-pressed="false">查看示例数据</button><a class="button" href="https://redrock-ip.com/dashboard/affiliate" target="_blank" rel="noopener">打开原站推广中心 <span aria-hidden="true">↗</span></a></div>
+  </div>
+  <div class="ws-affiliate-notice" id="affiliate-notice"><span class="ws-affiliate-dot" aria-hidden="true"></span><p>未接入账户数据。邀请链接、佣金与记录将在原站登录后显示。</p><span id="affiliate-state">未接入</span></div>
+
+  <div class="ws-affiliate-top">
+    <section class="ws-panel ws-affiliate-link-panel" aria-labelledby="affiliate-link-title">
+      <div class="ws-affiliate-panel-top"><div><div class="eyebrow">YOUR INVITE / 01</div><h2 id="affiliate-link-title">从一个链接，建立联系。</h2></div><span class="ws-affiliate-link-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 15 6-6M8 17l-1 1a4.2 4.2 0 0 1-6-6l4-4a4.2 4.2 0 0 1 6 0M16 7l1-1a4.2 4.2 0 0 1 6 6l-4 4a4.2 4.2 0 0 1-6 0" transform="translate(0 -1) scale(.96)"/></svg></span></div>
+      <p class="ws-affiliate-subtitle">在原站获取你的专属邀请链接，查看与之关联的记录。</p>
+      <label class="ws-affiliate-label" for="affiliate-link">邀请链接</label>
+      <div class="ws-affiliate-link-field"><input id="affiliate-link" type="text" readonly value="" placeholder="登录原站后获取专属邀请链接" aria-describedby="affiliate-link-note"><button class="ws-button" id="affiliate-copy" type="button" disabled>复制链接</button></div>
+      <p class="ws-affiliate-link-note" id="affiliate-link-note">当前未读取任何账户邀请码。</p>
+      <div class="ws-affiliate-link-actions"><a href="https://redrock-ip.com/dashboard/affiliate" target="_blank" rel="noopener">在原站获取专属邀请链接 <span aria-hidden="true">↗</span></a><span id="affiliate-code-label">邀请码：—</span></div>
+    </section>
+    <section class="ws-panel ws-affiliate-rules" aria-labelledby="affiliate-rules-title"><div class="eyebrow">BEFORE YOU SHARE</div><h2 id="affiliate-rules-title">了解规则，再开始。</h2><p>有效邀请、佣金比例与结算状态，以原站账户记录和当前规则为准。</p><div class="ws-affiliate-rule"><span aria-hidden="true">↗</span><div><strong>按记录查看佣金</strong><p>不同记录的适用比例可能不同，请在原站核对。</p></div></div><div class="ws-affiliate-rule"><span aria-hidden="true">₮</span><div><strong>原站当前最低提现 $20</strong><p>提现条件与网络信息，以原站确认页为准。</p></div></div><a class="ws-affiliate-rule-link" href="https://redrock-ip.com/dashboard/affiliate" target="_blank" rel="noopener">在原站管理提现 <span aria-hidden="true">↗</span></a></section>
+  </div>
+
+  <div class="ws-affiliate-metrics" aria-label="邀请与佣金概览">
+    <section class="ws-panel ws-affiliate-metric"><div><span>邀请人数</span><span aria-hidden="true">01</span></div><strong id="affiliate-invite-count">—</strong><p id="affiliate-invite-caption">等待账户记录</p></section>
+    <section class="ws-panel ws-affiliate-metric"><div><span>累计佣金</span><span aria-hidden="true">02</span></div><strong id="affiliate-total-commission">—</strong><p id="affiliate-total-caption">等待佣金数据</p></section>
+    <section class="ws-panel ws-affiliate-metric"><div><span>可提现收益</span><span aria-hidden="true">03</span></div><strong id="affiliate-available">—</strong><p id="affiliate-pending-caption">结算状态待接入</p></section>
+  </div>
+
+  <section class="ws-panel ws-affiliate-records" aria-labelledby="affiliate-records-title">
+    <div class="ws-affiliate-records-heading"><div><div class="eyebrow">YOUR RECORDS</div><h2 id="affiliate-records-title">每一条关联，都清楚。</h2></div><span id="affiliate-record-badge">等待账户记录</span></div>
+    <div class="ws-affiliate-tabs" role="tablist" aria-label="推广记录类型"><button id="affiliate-invites-tab" type="button" role="tab" aria-controls="affiliate-invites-panel" aria-selected="true" tabindex="0" data-affiliate-tab="invites">邀请记录</button><button id="affiliate-commissions-tab" type="button" role="tab" aria-controls="affiliate-commissions-panel" aria-selected="false" tabindex="-1" data-affiliate-tab="commissions">佣金明细</button></div>
+    <div class="ws-affiliate-filters"><div class="ws-field ws-affiliate-search"><label for="affiliate-search">搜索记录</label><input id="affiliate-search" type="search" maxlength="100" placeholder="搜索示例编号或用户" disabled></div><div class="ws-field"><label for="affiliate-filter">记录状态</label><select id="affiliate-filter" disabled><option value="all">全部状态</option><option value="linked">已关联</option><option value="registered">已注册</option></select></div><button class="ws-affiliate-reset" id="affiliate-reset" type="button" disabled>重置筛选</button></div>
+
+    <div id="affiliate-invites-panel" role="tabpanel" tabindex="0" aria-labelledby="affiliate-invites-tab"><div class="ws-affiliate-table-wrap" id="affiliate-invites-table" hidden><table><caption class="visually-hidden">示例邀请记录</caption><thead><tr><th scope="col">邀请记录</th><th scope="col">受邀用户</th><th scope="col">注册时间</th><th scope="col">状态</th></tr></thead><tbody id="affiliate-invites-rows"></tbody></table></div></div>
+    <div id="affiliate-commissions-panel" role="tabpanel" tabindex="0" aria-labelledby="affiliate-commissions-tab" hidden><div class="ws-affiliate-table-wrap" id="affiliate-commissions-table" hidden><table><caption class="visually-hidden">示例佣金明细</caption><thead><tr><th scope="col">佣金记录 / 来源订单</th><th scope="col">受邀用户</th><th scope="col">佣金</th><th scope="col">结算状态</th><th scope="col">记录日期</th></tr></thead><tbody id="affiliate-commissions-rows"></tbody></table></div></div>
+    <div class="ws-affiliate-empty" id="affiliate-empty"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><circle cx="20" cy="11" r="5"/><path d="M10 31v-5a10 10 0 0 1 20 0v5M5 16h5M30 16h5M7.5 13.5v5M32.5 13.5v5M13 35h14"/></svg><h3 id="affiliate-empty-title">推广记录尚未接入</h3><p id="affiliate-empty-description">登录原站查看专属邀请链接、有效邀请与佣金明细。</p><a id="affiliate-empty-link" href="https://redrock-ip.com/dashboard/affiliate" target="_blank" rel="noopener">查看原站推广记录 <span aria-hidden="true">↗</span></a></div>
+    <div class="ws-affiliate-table-footer"><span id="affiliate-result-count">等待账户数据</span><span id="affiliate-source-label">未读取真实账户</span></div>
+  </section>
+
+  <div class="ws-affiliate-steps" aria-label="推广信息使用流程"><div><span>01</span><h3>获取邀请信息</h3><p>登录原站，获取与你的账户关联的专属链接。</p></div><div><span>02</span><h3>分享给有需要的人</h3><p>按原站规则使用邀请信息，了解有效邀请条件。</p></div><div><span>03</span><h3>查看记录与结算</h3><p>在原站核对每条记录的佣金比例、金额与状态。</p></div></div>
+  <p class="ws-affiliate-status" id="affiliate-status" role="status" aria-live="polite"></p>
+  <noscript><p class="ws-affiliate-link-note">示例切换与筛选需要 JavaScript。你可以通过上方链接前往原站查看账户记录。</p></noscript>
+</section>

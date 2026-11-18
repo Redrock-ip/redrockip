@@ -1,0 +1,363 @@
+{
+  "checked_at_utc": "2026-11-18T10:29:49.039002+00:00",
+  "public_pricing_page": "https://redrock-ip.com/pricing",
+  "current_bundle_url": "https://redrock-ip.com/assets/index-CEQPI4f2.js",
+  "current_bundle_sha256": "3c7f668b2b51e7a59d4cf7abb8654b22f6adac75e7c31c3a7972deaaac72ce8b",
+  "method": "Unauthenticated public GET requests only. No account, cookies, bearer token, purchase or private customer data used.",
+  "currency": {
+    "display_symbol": "$",
+    "iso_currency_code": null,
+    "evidence": "Current public pricing/purchase renderers use literal dollar sign. No explicit standalone USD code, 美元 or 美金 found in current bundle. Current purchase flow supports USDT crypto settlement and uses usdtBalance for balance payment, but that does not establish that displayed $ is USD or a currency conversion.",
+    "recommendation": "Mirror the original $ symbol without adding USD/USDT currency labels or conversions. If a currency code is required, ask the business owner to confirm."
+  },
+  "display_recommendation": "Summarize product coverage at product level. Show the lowest listed unit rate as the starting price, including the hourly rate for bandwidth. Keep exact amounts in the purchase selector.",
+  "products": [
+    {
+      "id": "dynamic",
+      "api_url": "https://www.redrock-ip.com/api/DynamicPlan/GetPlanByMealType?mealType=res",
+      "http_status": 200,
+      "response_code": 200,
+      "listed_plan_count": 7,
+      "entry_plan": {
+        "plan_id": 1,
+        "plan_key": "5g-resi",
+        "quantity": 5,
+        "quantity_unit": "GB",
+        "unit_price": 1.6,
+        "minimum_total": 8.0,
+        "duration": null,
+        "location_en": null,
+        "location_zh": null,
+        "price_unit": "per GB"
+      },
+      "lowest_unit_price_plan": {
+        "plan_id": 14,
+        "plan_key": "10000g-resi",
+        "quantity": 10000,
+        "quantity_unit": "GB",
+        "unit_price": 0.5,
+        "minimum_total": 5000.0,
+        "duration": null,
+        "location_en": null,
+        "location_zh": null,
+        "price_unit": "per GB"
+      },
+      "currency_symbol": "$",
+      "currency_code": null,
+      "listed_location_count": null,
+      "checkout_plan_count": 7,
+      "checkout_available_plan_count": 7
+    },
+    {
+      "id": "static",
+      "api_url": "https://www.redrock-ip.com/api/StaticPlan/GetPlanByIspType?ispType=0",
+      "http_status": 200,
+      "response_code": 200,
+      "listed_plan_count": 155,
+      "entry_plan": {
+        "plan_id": 175,
+        "plan_key": "usml3070",
+        "quantity": 1,
+        "quantity_unit": "IP",
+        "unit_price": 6.0,
+        "minimum_total": 6.0,
+        "duration": {
+          "days": 30
+        },
+        "location_en": "America-United States-Maryland",
+        "location_zh": "美洲-美国-马里兰州",
+        "price_unit": "per IP for the stated duration"
+      },
+      "lowest_unit_price_plan": {
+        "plan_id": 175,
+        "plan_key": "usml3070",
+        "quantity": 1,
+        "quantity_unit": "IP",
+        "unit_price": 6.0,
+        "minimum_total": 6.0,
+        "duration": {
+          "days": 30
+        },
+        "location_en": "America-United States-Maryland",
+        "location_zh": "美洲-美国-马里兰州",
+        "price_unit": "per IP for the stated duration"
+      },
+      "currency_symbol": "$",
+      "currency_code": null,
+      "entry_plan_30_days_or_longer": {
+        "plan_id": 175,
+        "plan_key": "usml3070",
+        "quantity": 1,
+        "quantity_unit": "IP",
+        "unit_price": 6.0,
+        "minimum_total": 6.0,
+        "duration": {
+          "days": 30
+        },
+        "location_en": "America-United States-Maryland",
+        "location_zh": "美洲-美国-马里兰州",
+        "price_unit": "per IP for the stated duration"
+      },
+      "listed_location_count": 31,
+      "checkout_plan_count": 132,
+      "checkout_available_plan_count": 124
+    },
+    {
+      "id": "mobile",
+      "api_url": "https://www.redrock-ip.com/api/DynamicPlan/GetPlanByMealType?mealType=mobile",
+      "http_status": 200,
+      "response_code": 200,
+      "listed_plan_count": 7,
+      "entry_plan": {
+        "plan_id": 7,
+        "plan_key": "3g-mobile",
+        "quantity": 3,
+        "quantity_unit": "GB",
+        "unit_price": 3.2,
+        "minimum_total": 9.6,
+        "duration": null,
+        "location_en": null,
+        "location_zh": null,
+        "price_unit": "per GB"
+      },
+      "lowest_unit_price_plan": {
+        "plan_id": 13,
+        "plan_key": "3000g-mobile",
+        "quantity": 3000,
+        "quantity_unit": "GB",
+        "unit_price": 1.0,
+        "minimum_total": 3000.0,
+        "duration": null,
+        "location_en": null,
+        "location_zh": null,
+        "price_unit": "per GB"
+      },
+      "currency_symbol": "$",
+      "currency_code": null,
+      "listed_location_count": null,
+      "checkout_plan_count": 7,
+      "checkout_available_plan_count": 7
+    },
+    {
+      "id": "datacenter",
+      "api_url": "https://www.redrock-ip.com/api/DatacenterPlan/GetPlan",
+      "http_status": 200,
+      "response_code": 200,
+      "listed_plan_count": 18,
+      "entry_plan": {
+        "plan_id": 165,
+        "plan_key": "sp1",
+        "quantity": 1,
+        "quantity_unit": "IP",
+        "unit_price": 0.55,
+        "minimum_total": 0.55,
+        "duration": {
+          "days": 30
+        },
+        "location_en": "Europe-Spain",
+        "location_zh": "欧洲-西班牙",
+        "price_unit": "per IP for the stated duration"
+      },
+      "lowest_unit_price_plan": {
+        "plan_id": 165,
+        "plan_key": "sp1",
+        "quantity": 1,
+        "quantity_unit": "IP",
+        "unit_price": 0.55,
+        "minimum_total": 0.55,
+        "duration": {
+          "days": 30
+        },
+        "location_en": "Europe-Spain",
+        "location_zh": "欧洲-西班牙",
+        "price_unit": "per IP for the stated duration"
+      },
+      "currency_symbol": "$",
+      "currency_code": null,
+      "stock_note": "Endpoint exposes listed plan prices but no isSoldOut/isListed fields. Price availability does not guarantee assignable stock.",
+      "listed_location_count": 9,
+      "checkout_plan_count": 18,
+      "checkout_available_plan_count": 18
+    },
+    {
+      "id": "static-daily",
+      "api_url": "https://www.redrock-ip.com/api/StaticPlan/GetPlanByIspType?ispType=2",
+      "http_status": 200,
+      "response_code": 200,
+      "listed_plan_count": 6,
+      "entry_plan": {
+        "plan_id": 184,
+        "plan_key": "usindianaoneday-10",
+        "quantity": 10,
+        "quantity_unit": "IP",
+        "unit_price": 0.5,
+        "minimum_total": 5.0,
+        "duration": {
+          "days": 1
+        },
+        "location_en": "America-United States-OneDay",
+        "location_zh": "美洲-美国-一天",
+        "price_unit": "per IP for the stated duration"
+      },
+      "lowest_unit_price_plan": {
+        "plan_id": 189,
+        "plan_key": "usindianaoneday-1000",
+        "quantity": 1000,
+        "quantity_unit": "IP",
+        "unit_price": 0.18,
+        "minimum_total": 180.0,
+        "duration": {
+          "days": 1
+        },
+        "location_en": "America-United States-OneDay",
+        "location_zh": "美洲-美国-一天",
+        "price_unit": "per IP for the stated duration"
+      },
+      "currency_symbol": "$",
+      "currency_code": null,
+      "minimum_quantity_evidence": "Current bundle parses trailing digits of planKey as mandatory quantity, e.g. usindianaoneday-10 => 10 IPs and usindianaoneday-1000 => 1000 IPs. Original purchase passes this fixed quantity.",
+      "listed_location_count": 1,
+      "checkout_plan_count": 6,
+      "checkout_available_plan_count": 6
+    },
+    {
+      "id": "live",
+      "api_url": "https://www.redrock-ip.com/api/StaticPlan/GetPlanByIspType?ispType=3",
+      "http_status": 200,
+      "response_code": 200,
+      "listed_plan_count": 30,
+      "entry_plan": {
+        "plan_id": 276,
+        "plan_key": "twlivechunghwa30",
+        "quantity": 1,
+        "quantity_unit": "IP",
+        "unit_price": 36.0,
+        "minimum_total": 36.0,
+        "duration": {
+          "days": 30
+        },
+        "location_en": "Asia-Tai Wan-ChungHwa Operator Live",
+        "location_zh": "亚洲-台湾-中华电信直播线路",
+        "price_unit": "per IP for the stated duration"
+      },
+      "lowest_unit_price_plan": {
+        "plan_id": 276,
+        "plan_key": "twlivechunghwa30",
+        "quantity": 1,
+        "quantity_unit": "IP",
+        "unit_price": 36.0,
+        "minimum_total": 36.0,
+        "duration": {
+          "days": 30
+        },
+        "location_en": "Asia-Tai Wan-ChungHwa Operator Live",
+        "location_zh": "亚洲-台湾-中华电信直播线路",
+        "price_unit": "per IP for the stated duration"
+      },
+      "currency_symbol": "$",
+      "currency_code": null,
+      "entry_plan_30_days_or_longer": {
+        "plan_id": 276,
+        "plan_key": "twlivechunghwa30",
+        "quantity": 1,
+        "quantity_unit": "IP",
+        "unit_price": 36.0,
+        "minimum_total": 36.0,
+        "duration": {
+          "days": 30
+        },
+        "location_en": "Asia-Tai Wan-ChungHwa Operator Live",
+        "location_zh": "亚洲-台湾-中华电信直播线路",
+        "price_unit": "per IP for the stated duration"
+      },
+      "isp_type": 3,
+      "listed_location_count": 6,
+      "checkout_plan_count": 24,
+      "checkout_available_plan_count": 24
+    },
+    {
+      "id": "unlimited",
+      "api_url": "https://www.redrock-ip.com/api/UnlimitedPlan/GetPlan",
+      "http_status": 200,
+      "response_code": 200,
+      "listed_plan_count": 37,
+      "entry_plan": {
+        "plan_id": 1,
+        "plan_key": "unlimited-trial",
+        "quantity": 1,
+        "quantity_unit": "bandwidth plan",
+        "unit_price": 15.0,
+        "minimum_total": 15.0,
+        "duration": {
+          "hours": 1
+        },
+        "location_en": null,
+        "location_zh": null,
+        "bandwidth_value": 200,
+        "bandwidth_display_unit": "M (as displayed by original purchase UI)",
+        "price_unit": "per hour",
+        "total_formula": "unitPrice × hours"
+      },
+      "lowest_unit_price_plan": null,
+      "currency_symbol": "$",
+      "currency_code": null,
+      "lowest_daily_unit_price_plan": {
+        "plan_id": 29,
+        "plan_key": "unlimited-30-200",
+        "quantity": 1,
+        "quantity_unit": "bandwidth plan",
+        "unit_price": 73.0,
+        "minimum_total": 2190.0,
+        "duration": {
+          "hours": 720
+        },
+        "location_en": null,
+        "location_zh": null,
+        "bandwidth_value": 200,
+        "bandwidth_display_unit": "M (as displayed by original purchase UI)",
+        "price_unit": "per day",
+        "total_formula": "unitPrice × floor(hours / 24)"
+      },
+      "comparison_note": "Hourly and daily unitPrice values are not comparable. Show the entry one-hour plan, or a separately identified daily plan, with its complete duration.",
+      "listed_location_count": null,
+      "checkout_plan_count": 37,
+      "checkout_available_plan_count": 37
+    },
+    {
+      "id": "short",
+      "api_url": "https://www.redrock-ip.com/api/ShortDynamicPlan/GetPlan",
+      "http_status": 200,
+      "response_code": 200,
+      "listed_plan_count": 7,
+      "entry_plan": {
+        "plan_id": 1,
+        "plan_key": "short1",
+        "quantity": 60,
+        "quantity_unit": "IP allowance",
+        "unit_price": 0.1,
+        "minimum_total": 6.0,
+        "duration": null,
+        "location_en": null,
+        "location_zh": null,
+        "price_unit": "per IP allowance"
+      },
+      "lowest_unit_price_plan": {
+        "plan_id": 7,
+        "plan_key": "short7",
+        "quantity": 200000,
+        "quantity_unit": "IP allowance",
+        "unit_price": 0.02,
+        "minimum_total": 4000.0,
+        "duration": null,
+        "location_en": null,
+        "location_zh": null,
+        "price_unit": "per IP allowance"
+      },
+      "currency_symbol": "$",
+      "currency_code": null,
+      "listed_location_count": null,
+      "checkout_plan_count": 7,
+      "checkout_available_plan_count": 7
+    }
+  ]
+}

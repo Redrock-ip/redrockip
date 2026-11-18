@@ -1,0 +1,35 @@
+<section class="workspace-heading service-heading">
+  <div><div class="eyebrow">[[SERVICE_EYEBROW]] / SERVICE PREVIEW</div><h1>[[SERVICE_NAME]]</h1><p>[[SERVICE_DESCRIPTION]]</p></div>
+  <a class="button" href="/dashboard/purchase?tab=[[SERVICE_ID]]&amp;demo=1">模拟选购 <span aria-hidden="true">↗</span></a>
+</section>
+<!-- SERVICE_CONFIGURATION -->
+<div class="workspace-preview-banner"><p>配置预览使用演示数据。生成的示例地址仅供查看格式。</p></div>
+<div class="service-layout">
+  <section class="ws-panel">
+    <h2>[[SERVICE_ACTION_TITLE]]</h2>
+    <form id="service-form" class="service-form">
+      <div class="ws-field"><label for="service-region">示例地区</label><select id="service-region"><option>自动选择</option><option>美洲</option><option>欧洲</option><option>亚太</option></select></div>
+      <div class="ws-field"><label for="service-protocol">协议</label><select id="service-protocol"><option value="http">HTTP</option><option value="socks5">SOCKS5</option></select></div>
+      <div class="ws-field" data-service-fields="generate bandwidth"><label for="service-session">会话模式</label><select id="service-session"><option>按请求轮换</option><option>会话保持</option></select></div>
+      <div class="ws-field" data-service-fields="bandwidth"><label for="service-bandwidth">示例带宽</label><select id="service-bandwidth"><option>200M</option></select></div>
+      <div class="ws-field" data-service-fields="batch"><label for="service-quantity">示例数量</label><select id="service-quantity"><option>1</option><option>3</option><option>5</option></select></div>
+      <div class="ws-field" data-service-fields="resources"><label for="service-resource">示例资源</label><select id="service-resource"><option value="1">示例线路 01</option><option value="2">示例线路 02</option></select></div>
+      <button class="button" type="submit">[[SERVICE_ACTION]] <span aria-hidden="true">↗</span></button>
+    </form>
+  </section>
+  <section class="ws-panel">
+    <h2>[[SERVICE_RESULT_TITLE]]</h2>
+    <div class="ws-empty service-empty" id="service-empty"><p>选择配置后，可在这里查看连接格式和相关信息。</p></div>
+    <div id="service-result" hidden>
+      <dl class="service-details" id="service-details"></dl>
+      <div class="ws-field"><label for="service-sample">连接格式示例</label><textarea id="service-sample" rows="3" readonly spellcheck="false"></textarea></div>
+      <button id="service-copy" class="workspace-secondary" type="button">复制示例</button>
+    </div>
+    <p id="service-status" class="ws-status" role="status"></p>
+  </section>
+</div>
+<section class="ws-panel service-next">
+  <div><h2>继续体验演示</h2><p>购买后可在订单记录中查看套餐，并模拟连接或流量使用。</p></div>
+  <a class="workspace-secondary" href="/dashboard/orders?demo=1">查看演示订单 ↗</a>
+  <a id="service-usage" class="workspace-secondary" href="/dashboard/usage?demo=1">查看演示用量 ↗</a>
+</section>

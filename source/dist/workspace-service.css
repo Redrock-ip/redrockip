@@ -1,0 +1,85 @@
+.service-layout { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); align-items: start; gap: 22px; }
+.service-form { display: grid; gap: 17px; }
+.service-form>.button { justify-self: start; }
+.service-details { display: grid; gap: 11px; margin: 0 0 19px; }
+.service-details>div { display: flex; justify-content: space-between; gap: 12px; }
+.service-details dt { color: #ceacbf; }
+.service-details dd { margin: 0; text-align: right; overflow-wrap: anywhere; }
+#service-sample { resize: vertical; font-family: ui-monospace,monospace; }
+#service-copy { margin-top: 12px; }
+.service-next { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 22px; }
+.service-next>div { flex: 1 1 280px; }
+.service-next h2,.service-next p { margin: 0; }
+.service-next p { margin-top: 7px; }
+@media(max-width:800px) { .service-layout { grid-template-columns: minmax(0,1fr); } }
+
+.service-tabs { display: flex; flex-wrap: wrap; gap: 7px; margin: 0 0 20px; }
+.service-tabs button { padding: 10px 15px; border: 1px solid #4c303d; border-radius: 5px; background: #120e12; color: #e6d4df; font: inherit; font-size: 13px; cursor: pointer; }
+.service-tabs button:hover,.service-tabs button[aria-selected="true"] { border-color: #dd7589; color: #fff5f7; background: #341722; }
+#traffic-config:focus-visible,#traffic-usage:focus-visible,#traffic-keys:focus-visible { outline: 2px solid #ee9cae; outline-offset: 4px; }
+.service-traffic-heading,.service-traffic-filter { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; }
+.service-traffic-heading { justify-content: space-between; }
+.service-traffic-heading h2 { margin: 0; }
+.service-traffic-filter { align-items: end; }
+.service-traffic-key { min-width: min(100%, 230px); }
+.service-traffic-ranges { display: flex; flex-wrap: wrap; gap: 7px; }
+.service-traffic-ranges button[aria-pressed="true"] { border-color: #e8899d; background: #512439; color: #fff; }
+.service-traffic-status { margin: 14px 0; color: #ddc4d3; font-size: 13px; }
+.service-traffic-status:empty { display: none; }
+.service-traffic-total { display: flex; align-items: baseline; justify-content: space-between; margin: 16px 0 10px; }
+.service-traffic-total strong { font-size: 23px; color: #fff2f7; font-variant-numeric: tabular-nums; }
+.service-traffic-table { min-width: 0; font-variant-numeric: tabular-nums; }
+.service-traffic-table :is(th,td):last-child { text-align: right; }
+.service-traffic-metrics { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 14px; margin: 16px 0; }
+.service-traffic-metrics .ws-kpi { padding: 17px; }
+.service-traffic-metrics .ws-kpi strong { font-size: clamp(18px,2.2vw,27px); overflow-wrap: anywhere; }
+.service-traffic-charts svg { width: 100%; height: auto; display: block; overflow: visible; }
+.service-traffic-charts svg text { fill: #d5bdcc; font-size: 12px; }
+.service-traffic-grid { stroke: #573a49; stroke-dasharray: 4 4; }
+.service-traffic-line { fill: none; stroke-width: 2; vector-effect: non-scaling-stroke; }
+.service-traffic-series-1 { stroke: #ff8288; }
+.service-traffic-series-2 { stroke: #f4ba7a; stroke-dasharray: 5 2; }
+.service-traffic-series-3 { stroke: #91aeff; stroke-dasharray: 2 2; }
+.service-traffic-legend { display: flex; gap: 14px; flex-wrap: wrap; list-style: none; padding: 0; margin: 10px 0 0; color: #eccfdf; font-size: 12px; }
+.service-traffic-legend li::before { content: ''; display: inline-block; width: 12px; margin-right: 6px; border-top: 2px solid #ff8288; vertical-align: middle; }
+.service-traffic-legend li:nth-child(2)::before { border-color: #f4ba7a; border-top-style: dashed; }
+.service-traffic-legend li:nth-child(3)::before { border-color: #91aeff; border-top-style: dotted; }
+@media(max-width:1100px) { .service-traffic-metrics { grid-template-columns: repeat(2,minmax(0,1fr)); } }
+@media(max-width:420px) { .service-tabs button { padding-inline: 8px; font-size: 12px; } }
+
+.traffic-detail-query {
+  display: flex;
+  align-items: end;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.traffic-detail-query .ws-field { flex: 1 1 135px; }
+.traffic-detail-query .ws-field:has(input) { flex-basis: 180px; }
+.traffic-detail-query input { color-scheme: dark; }
+.traffic-detail-query .button,.traffic-detail-query .ws-button { min-height: 44px; }
+.traffic-detail-query .button:disabled { opacity: .55; cursor: not-allowed; }
+.traffic-detail-layout { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1.05fr); gap: 16px; align-items: start; }
+.traffic-detail-layout > div > section + section { margin-top: 16px; }
+#traffic-detail-trend:not(:empty) { margin-top: 12px; }
+#traffic-detail-trend svg { width: 100%; height: auto; display: block; overflow: visible; }
+#traffic-detail-trend svg text { fill: #d5bdcc; font-size: 12px; }
+.traffic-detail-donut { position: relative; width: min(160px,65%); aspect-ratio: 1; border-radius: 50%; margin: 20px auto; }
+.traffic-detail-donut::after { position: absolute; inset: 20%; border-radius: 50%; background: #0f0b10; content: ''; }
+.traffic-detail-countries { list-style: none; padding: 0; margin: 0; color: #eccfdf; font-size: 13px; }
+.traffic-detail-countries li { display: grid; grid-template-columns: 9px 1fr auto; align-items: center; gap: 8px; padding: 8px 0; }
+.traffic-detail-countries i { width: 9px; height: 9px; border-radius: 50%; }
+.traffic-detail-sort { max-width: 180px; margin-bottom: 13px; }
+.traffic-detail-domain-table { max-height: 510px; overflow: auto; }
+.traffic-detail-domain-table th { position: sticky; top: 0; }
+.traffic-detail-domain-table :is(th,td) { padding: 10px; }
+.traffic-detail-domain-table :is(th,td):not(:first-child) { text-align: right; }
+.traffic-detail-domain-table td:first-child { overflow-wrap: anywhere; }
+.traffic-detail-pagination { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.traffic-detail-pagination p { margin: 0; }
+.traffic-detail-pagination .service-traffic-ranges { align-items: center; color: #eccfdf; font-size: 12px; }
+.traffic-detail-pagination .ws-button { padding: 5px 11px; min-height: 34px; }
+@media (max-width: 1000px) { .traffic-detail-layout { grid-template-columns: minmax(0,1fr); } }
+@media (max-width: 450px) {
+  .traffic-detail-domain-table :is(th,td) { padding: 8px 5px; }
+  .traffic-detail-pagination select { padding: 7px; }
+}

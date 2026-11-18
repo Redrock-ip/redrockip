@@ -1,0 +1,178 @@
+[
+  {
+    "id": "dynamic",
+    "name": "Rotating Residential",
+    "en": "ROTATING RESIDENTIAL",
+    "route": "proxy-generator",
+    "family": "residential",
+    "icon": "rotating-home",
+    "desc": "Rotate residential network exits according to your configuration for data access tasks that require changing connections.",
+    "tags": [
+      "Rotating residential exits",
+      "Data access"
+    ],
+    "scenario": "Public data collection, price monitoring and market research",
+    "focus": "Review rotation rules, session duration, data packages and available locations.",
+    "checks": [
+      "Confirm required locations and available resources",
+      "Review rotation and session persistence rules",
+      "Check data package validity and how usage is measured"
+    ],
+    "billing": "Data-based billing, measured in GB",
+    "pricing": "dynamic"
+  },
+  {
+    "id": "static",
+    "name": "Static Residential",
+    "en": "STATIC RESIDENTIAL",
+    "route": "static-proxies",
+    "family": "residential",
+    "icon": "fixed-home",
+    "desc": "Use a relatively fixed residential network exit for workflows that need session continuity.",
+    "tags": [
+      "Fixed exit",
+      "Session continuity"
+    ],
+    "scenario": "Persistent sessions, business system access and website experience checks",
+    "focus": "Confirm locations, IP allocation and the service period, then test in your environment.",
+    "checks": [
+      "Confirm locations and the number of IPs needed",
+      "Check service periods and renewal rules",
+      "Test whether a fixed exit meets your session requirements"
+    ],
+    "billing": "Per IP and selected service period",
+    "pricing": "static"
+  },
+  {
+    "id": "mobile",
+    "name": "Mobile Proxies",
+    "en": "MOBILE PROXIES",
+    "route": "mobile-generator",
+    "family": "mobile",
+    "icon": "mobile-signal",
+    "desc": "Connect through mobile networks for mobile experience checks and application testing.",
+    "tags": [
+      "Mobile networks",
+      "Application testing"
+    ],
+    "scenario": "Mobile app testing, page checks and ad display monitoring",
+    "focus": "Confirm locations, network types and how your testing tools will connect.",
+    "checks": [
+      "Confirm available locations and network types",
+      "Review session settings and connection protocols",
+      "Review data usage rules and testing requirements"
+    ],
+    "billing": "Data-based billing, measured in GB",
+    "pricing": "mobile"
+  },
+  {
+    "id": "datacenter",
+    "name": "Datacenter Proxies",
+    "en": "DATACENTER PROXIES",
+    "route": "datacenter-proxies",
+    "family": "datacenter",
+    "icon": "server-rack",
+    "desc": "Connect through datacenter networks for authorized automation and routine data access.",
+    "tags": [
+      "Datacenter networks",
+      "Automation tasks"
+    ],
+    "scenario": "System integration testing, authorized automation and routine data access",
+    "focus": "For workflows that do not require a residential or mobile network environment.",
+    "checks": [
+      "Confirm locations, IP quantities and service periods",
+      "Check protocols and authentication methods",
+      "Test within the target service access rules"
+    ],
+    "billing": "Per IP and selected service period",
+    "pricing": "datacenter"
+  },
+  {
+    "id": "static-daily",
+    "name": "Daily Residential",
+    "en": "DAILY RESIDENTIAL",
+    "route": "static-daily-proxies",
+    "family": "residential",
+    "icon": "daily-calendar",
+    "desc": "Choose daily static residential plans by location and validity period, and review connection details and expiry times.",
+    "tags": [
+      "Daily plans",
+      "Static residential"
+    ],
+    "scenario": "Residential network access scheduled around task duration",
+    "focus": "The selected plan determines validity. Confirm renewal and expiry arrangements in advance.",
+    "checks": [
+      "Choose locations and the planned number of IPs",
+      "Check plan validity and expiry times",
+      "Confirm connection, renewal and replacement rules"
+    ],
+    "billing": "Per IP; plan validity is listed separately",
+    "pricing": null
+  },
+  {
+    "id": "live",
+    "name": "Live Connection",
+    "en": "LIVE CONNECTION",
+    "route": "live-proxies",
+    "family": "special",
+    "icon": "live-video",
+    "desc": "IP plans for live streaming workflows, configured by location and service period.",
+    "tags": [
+      "Live streaming",
+      "Connection setup"
+    ],
+    "scenario": "Network exit configuration and connection management for live streaming",
+    "focus": "Check suitability against your streaming platform, locations and actual workflow.",
+    "checks": [
+      "Confirm target locations and the streaming use case",
+      "Review IP quantities and service periods",
+      "Review connection details and test the use case"
+    ],
+    "billing": "Per IP; plan duration is listed separately",
+    "pricing": null
+  },
+  {
+    "id": "unlimited",
+    "name": "Bandwidth Plans",
+    "en": "BANDWIDTH PLANS",
+    "route": "unlimited-proxies",
+    "family": "special",
+    "icon": "unlimited-infinity",
+    "desc": "Choose a plan by bandwidth tier and duration, and manage proxy settings through an Unlimited KEY.",
+    "tags": [
+      "Bandwidth tiers",
+      "Duration-based plans"
+    ],
+    "scenario": "Proxy tasks planned around bandwidth and duration",
+    "focus": "Confirm the scope and limits of “unlimited” usage in the selected plan and service terms.",
+    "checks": [
+      "Confirm bandwidth tiers and hourly or daily plans",
+      "Review KEY, session and location settings",
+      "Check plan scope and usage rules"
+    ],
+    "billing": "By selected hourly or daily plan; bandwidth tier is listed separately",
+    "pricing": null
+  },
+  {
+    "id": "short",
+    "name": "Short-Term Residential",
+    "en": "SHORT-TERM RESIDENTIAL",
+    "route": "short-dynamic-proxies",
+    "family": "residential",
+    "icon": "short-hourglass",
+    "desc": "Purchase an IP quota, generate short-term residential proxies, and review generation records and expiry times.",
+    "tags": [
+      "IP quota",
+      "Short-term exits"
+    ],
+    "scenario": "Workflows that generate residential proxies in task batches",
+    "focus": "Actual validity depends on the generation record and selected plan.",
+    "checks": [
+      "Confirm required locations and generation quantities",
+      "Review IP quotas and usage methods",
+      "Review generation records and expiry details"
+    ],
+    "billing": "By IP quota",
+    "pricing": null
+  }
+]

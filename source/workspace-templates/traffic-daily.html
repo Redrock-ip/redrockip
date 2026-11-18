@@ -1,0 +1,22 @@
+<section class="ws-panel" aria-labelledby="traffic-daily-title">
+  <div class="service-traffic-heading">
+    <h2 id="traffic-daily-title">每日流量明细</h2>
+    <div class="service-traffic-ranges" role="group" aria-label="明细时间范围">
+      <button class="ws-button" type="button" data-traffic-range="7" aria-pressed="true" disabled>近 7 天</button>
+      <button class="ws-button" type="button" data-traffic-range="14" aria-pressed="false" disabled>近 14 天</button>
+      <button class="ws-button" type="button" data-traffic-range="30" aria-pressed="false" disabled>近 30 天</button>
+    </div>
+  </div>
+  <p id="traffic-status" class="service-traffic-status" role="status">流量明细暂不可用。</p>
+  <button class="ws-button" type="button" id="traffic-refresh" hidden>重试</button>
+  <div id="traffic-results" hidden>
+    <p class="service-traffic-total">区间总流量 <strong id="traffic-total">—</strong></p>
+    <div class="ws-table-wrap">
+      <table class="ws-table service-traffic-table">
+        <caption class="visually-hidden">所选时间范围的每日用量</caption>
+        <thead><tr><th scope="col">日期</th><th scope="col">使用流量（GB）</th></tr></thead>
+        <tbody id="traffic-rows"></tbody>
+      </table>
+    </div>
+  </div>
+</section>

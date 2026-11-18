@@ -1,0 +1,79 @@
+<div id="traffic-analytics">
+  <form id="traffic-detail-query" class="ws-panel traffic-detail-query">
+    <div class="ws-field">
+      <label for="traffic-detail-from">开始时间（UTC+8）</label>
+      <input id="traffic-detail-from" type="datetime-local" required disabled>
+    </div>
+    <div class="ws-field">
+      <label for="traffic-detail-to">结束时间（UTC+8）</label>
+      <input id="traffic-detail-to" type="datetime-local" required disabled>
+    </div>
+    <div class="ws-field">
+      <label for="traffic-detail-interval">统计粒度</label>
+      <select id="traffic-detail-interval" disabled><option value="hour">每小时</option><option value="day">每天</option></select>
+    </div>
+    <button id="traffic-detail-submit" type="submit" class="button" disabled>查询（最多 30 天）</button>
+    <button id="traffic-detail-refresh" type="button" class="ws-button" disabled>刷新</button>
+  </form>
+  <p id="traffic-detail-status" class="service-traffic-status" role="status">流量明细暂不可用。</p>
+  <div id="traffic-detail-data">
+    <div class="service-traffic-metrics" aria-label="区间数据">
+      <article class="ws-kpi"><span>总流量</span><strong id="traffic-detail-total">—</strong><small id="traffic-detail-directions"></small></article>
+      <article class="ws-kpi"><span>请求数</span><strong id="traffic-detail-requests">—</strong></article>
+      <article class="ws-kpi"><span>成功率</span><strong id="traffic-detail-rate">—</strong></article>
+      <article class="ws-kpi"><span>限流请求</span><strong id="traffic-detail-limited">—</strong></article>
+    </div>
+    <div class="traffic-detail-layout">
+      <div>
+        <section class="ws-panel" aria-labelledby="traffic-detail-trend-title">
+          <h2 id="traffic-detail-trend-title">使用趋势（UTC+8）</h2>
+          <div class="service-traffic-ranges" role="group" aria-label="趋势指标">
+            <button type="button" class="ws-button" data-traffic-detail-chart="bytes" aria-pressed="true" disabled>流量</button>
+            <button type="button" class="ws-button" data-traffic-detail-chart="requests" aria-pressed="false" disabled>请求数</button>
+          </div>
+          <div id="traffic-detail-trend"></div>
+          <ul id="traffic-detail-traffic-legend" class="service-traffic-legend" aria-label="流量指标" hidden><li>总流量</li><li>下载</li><li>上传</li></ul>
+          <ul id="traffic-detail-requests-legend" class="service-traffic-legend" aria-label="请求指标" hidden><li>请求数</li></ul>
+          <p id="traffic-detail-no-trend">暂无趋势数据。</p>
+        </section>
+        <section class="ws-panel" aria-labelledby="traffic-detail-countries-title">
+          <h2 id="traffic-detail-countries-title">国家分布</h2>
+          <div id="traffic-detail-donut" class="traffic-detail-donut" aria-hidden="true" hidden></div>
+          <ul id="traffic-detail-countries" class="traffic-detail-countries"></ul>
+          <p id="traffic-detail-no-countries">暂无国家分布数据。</p>
+        </section>
+      </div>
+      <section class="ws-panel" aria-labelledby="traffic-detail-domains-title">
+        <h2 id="traffic-detail-domains-title">热门目标域名</h2>
+        <div class="ws-field traffic-detail-sort">
+          <label for="traffic-detail-sort">排序方式</label>
+          <select id="traffic-detail-sort" disabled>
+            <option value="totalBytes">总流量</option>
+            <option value="requests">请求数</option>
+            <option value="successfulRequests">成功次数</option>
+          </select>
+        </div>
+        <p id="traffic-detail-no-domains">暂无目标域名数据。</p>
+        <div id="traffic-detail-domain-table" class="ws-table-wrap traffic-detail-domain-table" tabindex="0" hidden>
+          <table class="ws-table service-traffic-table">
+            <caption class="visually-hidden">目标域名请求与流量明细</caption>
+            <thead><tr><th scope="col">主机</th><th scope="col">成功次数</th><th scope="col">流量</th><th scope="col">请求数</th></tr></thead>
+            <tbody id="traffic-detail-domain-rows"></tbody>
+          </table>
+        </div>
+        <div id="traffic-detail-pagination" class="traffic-detail-pagination" hidden>
+          <div class="ws-field">
+            <label class="visually-hidden" for="traffic-detail-page-size">每页行数</label>
+            <select id="traffic-detail-page-size"><option value="10">10 条/页</option><option value="25" selected>25 条/页</option><option value="50">50 条/页</option></select>
+          </div>
+          <p id="traffic-detail-domain-count" aria-live="polite"></p>
+          <div class="service-traffic-ranges" role="group" aria-label="域名分页">
+            <button id="traffic-detail-prev" class="ws-button" type="button" aria-label="上一页">‹</button>
+            <span id="traffic-detail-page" aria-live="polite"></span>
+            <button id="traffic-detail-next" class="ws-button" type="button" aria-label="下一页">›</button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>

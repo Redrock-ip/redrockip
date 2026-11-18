@@ -15,7 +15,7 @@ short_date = checked.strftime('%Y.%m.%d')
 date_zh = f'{checked.year} 年 {checked.month} 月 {checked.day} 日'
 date_en = checked.strftime('%B ') + str(checked.day) + checked.strftime(', %Y')
 prices = {p['id']: p for p in evidence['products']}
-translations = {}
+translations = {'>登录<':'>Sign in<','>注册<':'>Sign up<','>支持<':'>Support<'}
 def word(zh, en):
     translations[zh] = en
     return html.escape(zh)
@@ -38,6 +38,13 @@ for product in products:
     assert match, product['id']
     icons[product['id']] = match.group(1)
 
+def link_with_menu(path, title, dropdown, active):
+    cls = ' is-active' if active else ''
+    current = ' aria-current="page"' if active else ''
+    return (f'<div class="nav-split{cls}"><a class="nav-split-link" href="{path}"{current}>{title}</a>'
+            f'{dropdown}</div>')
+
+
 def pricing_menu(active):
     cards = []
     for product in products:
@@ -45,37 +52,94 @@ def pricing_menu(active):
         desc, desc_en = copy[key]
         price = prices[key]
         cards.append(f'<a class="mega-product" href="pricing.html#price-{key}" data-mega-product="{key}"><span class="mega-product-top"><span class="mega-icon" aria-hidden="true">{icons[key]}</span><span class="mega-product-name">{html.escape(product["name"])}</span><b aria-hidden="true">↗</b></span><span class="mega-description">{word(desc,desc_en)}</span><span class="mega-price"><strong>{word(*starting_price(price))}</strong></span><span class="mega-condition">{word(*coverage(price))}</span></a>')
-    current = ' aria-current="page"' if active else ''
-    cls = ' is-active' if active else ''
-    return '<!-- REDROCK-PRICING-MENU:START --><details class="nav-dropdown pricing-mega'+cls+'"><summary id="nav-pricing-label" aria-controls="nav-pricing-panel"'+current+'>价格</summary><div class="mega-panel pricing-mega-panel" id="nav-pricing-panel"><div class="mega-heading"><div><span class="mega-eyebrow">08 / PROXY PLANS</span><h2>'+word('按任务，找到合适的套餐。','Find a plan for your task.')+'</h2></div><span class="mega-reference-date">'+word('参考起价 · '+short_date,'Starting prices · '+short_date)+'</span></div><div class="mega-product-grid">'+''.join(cards)+'</div><div class="mega-footer"><p>'+word('实际价格与可用地区以原站为准。','Check the original site for current prices and available locations.')+'</p><a href="pricing.html#all-product-pricing">'+word('查看全部定价','View all pricing')+' <span aria-hidden="true">↗</span></a></div></div></details><!-- REDROCK-PRICING-MENU:END -->'
+    label = word('展开价格菜单','Open pricing menu')
+    dropdown = (
+        f'<details class="nav-dropdown pricing-mega"><summary id="nav-pricing-label" aria-controls="nav-pricing-panel" aria-label="{label}"></summary>'
+        '<div class="mega-panel pricing-mega-panel" id="nav-pricing-panel"><div class="mega-heading"><div>'
+        f'<h2>{word("按任务，找到合适的套餐。","Find a plan for your task.")}</h2></div>'
+        f'<span class="mega-reference-date">{word("参考起价 · "+short_date,"Starting prices · "+short_date)}</span></div>'
+        f'<div class="mega-product-grid">{"".join(cards)}</div><div class="mega-footer">'
+        f'<p>{word("实际价格与可用地区以原站为准。","Check the original site for current prices and available locations.")}</p>'
+        '</div></div></details>'
+    )
+    return link_with_menu('/pricing', '价格', dropdown, active)
+
 
 def tools_menu(active_page):
     active = active_page in ['proxy-checker','device-checker']
     cls = ' is-active' if active else ''
-    markup = '<!-- REDROCK-TOOLS-MENU:START --><details class="nav-dropdown tools-mega'+cls+'"><summary id="nav-tools-label" aria-controls="nav-tools-panel">检测工具</summary><div class="mega-panel tools-mega-panel" id="nav-tools-panel"><div class="mega-heading"><div><span class="mega-eyebrow">02 / CONNECTION TOOLS</span><h2>'+word('先检查，再开始。','Check before you connect.')+'</h2></div></div><div class="mega-tools-grid"><a class="mega-tool" href="proxy-checker.html"><span class="mega-tool-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 17h16M8 3 4 7l4 4-4 4"/><path d="M12 7v10"/></svg></span><strong>代理检测 <span aria-hidden="true">↗</span></strong><p>'+word('批量检查代理地址、端口、协议与认证格式。','Check proxy addresses, ports, protocols and authentication syntax.')+'</p><span class="mega-tool-note">'+word('本页核对格式；真实连通性在原站检测。','Local syntax checks; test live connections on the original site.')+'</span></a><a class="mega-tool" href="device-checker.html"><span class="mega-tool-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="12" rx="2"/><path d="M8 21h8M12 15v6M6 7h5M15 7h3M6 11h12"/></svg></span><strong>设备检测 <span aria-hidden="true">↗</span></strong><p>'+word('核对静态住宅代理的在线设备查询配置。','Check the settings needed to query connected proxy devices.')+'</p><span class="mega-tool-note">'+word('在线设备数量与刷新结果由原站提供。','Live device counts and refresh results are available on the original site.')+'</span></a></div><div class="mega-footer"><p>'+word('用于接入前检查与连接问题排查。','Tools for setup checks and connection troubleshooting.')+'</p><a href="faq.html">'+word('查看接入常见问题','Read setup FAQs')+' <span aria-hidden="true">↗</span></a></div></div></details><!-- REDROCK-TOOLS-MENU:END -->'
+    markup = '<!-- REDROCK-TOOLS-MENU:START --><details class="nav-dropdown tools-mega'+cls+'"><summary id="nav-tools-label" aria-controls="nav-tools-panel">检测工具</summary><div class="mega-panel tools-mega-panel" id="nav-tools-panel"><div class="mega-heading"><div><h2>'+word('先检查，再开始。','Check before you connect.')+'</h2></div></div><div class="mega-tools-grid"><a class="mega-tool" href="proxy-checker.html"><span class="mega-tool-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 17h16M8 3 4 7l4 4-4 4"/><path d="M12 7v10"/></svg></span><strong>代理检测 <span aria-hidden="true">↗</span></strong><p>'+word('批量检查代理地址、端口、协议与认证格式。','Check proxy addresses, ports, protocols and authentication syntax.')+'</p><span class="mega-tool-note">'+word('本页核对格式；真实连通性在原站检测。','Local syntax checks; test live connections on the original site.')+'</span></a><a class="mega-tool" href="device-checker.html"><span class="mega-tool-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="12" rx="2"/><path d="M8 21h8M12 15v6M6 7h5M15 7h3M6 11h12"/></svg></span><strong>设备检测 <span aria-hidden="true">↗</span></strong><p>'+word('核对静态住宅代理的在线设备查询配置。','Check the settings needed to query connected proxy devices.')+'</p><span class="mega-tool-note">'+word('在线设备数量与刷新结果由原站提供。','Live device counts and refresh results are available on the original site.')+'</span></a></div><div class="mega-footer"><p>'+word('用于接入前检查与连接问题排查。','Tools for setup checks and connection troubleshooting.')+'</p><a href="faq.html">'+word('查看接入常见问题','Read setup FAQs')+' <span aria-hidden="true">↗</span></a></div></div></details><!-- REDROCK-TOOLS-MENU:END -->'
     if active:markup = markup.replace('href="'+active_page+'.html"', 'href="'+active_page+'.html" aria-current="page"', 1)
     return markup
 
+def menu_link(href, title, description, icon=''):
+    brand_icon = f'<span class="mega-icon" aria-hidden="true">{icon}</span>' if icon else ''
+    return (f'<a class="mega-link" href="{href}">{brand_icon}<span class="mega-link-copy">'
+            f'<strong>{title}</strong><small>{description}</small></span><span class="mega-link-arrow" aria-hidden="true">↗</span></a>')
+
+
+def products_menu(active):
+    groups = (
+        (word('住宅线路','Residential proxies'), ('dynamic','static','static-daily','short')),
+        (word('其他网络与方案','Other networks and plans'), ('mobile','datacenter','live','unlimited')),
+    )
+    by_id = {p['id']:p for p in products}
+    panels = []
+    for label, keys in groups:
+        links = []
+        for key in keys:
+            links.append(menu_link(f'products.html#{key}',html.escape(by_id[key]['name']),word(*copy[key]),icons[key]))
+        panels.append(f'<div class="mega-link-group"><h2>{label}</h2>{"".join(links)}</div>')
+    label = word('展开产品菜单','Open product menu')
+    dropdown = (
+        f'<details class="nav-dropdown product-mega"><summary id="nav-products-label" aria-controls="nav-products-panel" aria-label="{label}"></summary>'
+        '<div class="mega-panel product-mega-panel" id="nav-products-panel">'
+        f'<div class="mega-link-grid">{"".join(panels)}</div></div></details>'
+    )
+    return link_with_menu('/products', '产品', dropdown, active)
+
+
+def support_menu(page):
+    links = (
+        ('faq',word('常见问题','FAQ'),word('查看账户、计费和代理接入相关解答。','Answers about accounts, billing and proxy setup.')),
+        ('contact',word('联系咨询','Contact'),word('联系团队咨询产品或获取技术支持。','Contact the team for product advice or technical help.')),
+    )
+    cls = ' is-active' if page in ('faq','contact') else ''
+    items = ''.join(menu_link(route+'.html',title,desc) for route,title,desc in links)
+    items = items.replace(f'href="{page}.html"',f'href="{page}.html" aria-current="page"')
+    return (f'<details class="nav-dropdown support-mega{cls}"><summary id="nav-support-label" aria-controls="nav-support-panel">{"支持"}</summary>'
+            f'<div class="mega-panel support-mega-panel" id="nav-support-panel">{items}</div></details>')
+
+
+def account_links():
+    return ('<a class="nav-account-login" href="login.html">登录</a>'
+            '<a class="button small nav-account-register" href="register.html">注册</a>')
+
+
 for page in DIST.glob('*.html'):
     source = page.read_text()
-    if '<nav id="nav"' not in source:continue
-    start = source.index('<header'); end = source.index('</header>',start)+len('</header>')
-    header = source[start:end]
-    pricing = pricing_menu(page.stem=='pricing')
-    tools = tools_menu(page.stem)
-    if '<!-- REDROCK-PRICING-MENU:START -->' in header:
-        header = re.sub(r'<!-- REDROCK-PRICING-MENU:START -->.*?<!-- REDROCK-PRICING-MENU:END -->',lambda _:pricing,header,flags=re.S)
-    else:
-        header,n = re.subn(r'<a href="pricing.html"[^>]*>价格</a>',lambda _:pricing,header,count=1)
-        assert n==1,page
-    if '<!-- REDROCK-TOOLS-MENU:START -->' in header:
-        header = re.sub(r'<!-- REDROCK-TOOLS-MENU:START -->.*?<!-- REDROCK-TOOLS-MENU:END -->',lambda _:tools,header,flags=re.S)
-    else:
-        header,n = re.subn(r'<details class="nav-dropdown[^\"]*"><summary>检测工具</summary>.*?</details>',lambda _:tools,header,count=1,flags=re.S)
-        assert n==1,page
+    if '<nav id="nav"' not in source:
+        continue
+    start = source.index('<header')
+    end = source.index('</header>',start)+len('</header>')
+    header = source[start:end].replace('class="site-header"','class="site-header site-header--capsule"',1)
+    cls = ' aria-current="page"' if page.stem=='about' else ''
+    items = (products_menu(page.stem=='products') + pricing_menu(page.stem=='pricing') + tools_menu(page.stem)
+             + f'<a href="about.html"{cls}>关于我们</a>' + support_menu(page.stem)
+             + f'<div class="nav-mobile-actions">{account_links()}</div>')
+    nav = f'<nav id="nav" aria-label="{word("主导航","Main navigation")}">{items}</nav>'
+    header,n = re.subn(r'<nav id="nav"[^>]*>.*?</nav>',lambda _:nav,header,count=1,flags=re.S)
+    assert n==1,page
+    actions = ('<div class="header-actions">'+account_links()
+               +'<button class="menu" type="button" aria-expanded="false" aria-controls="nav" aria-label="展开导航">'
+               +'<span aria-hidden="true"></span><span aria-hidden="true"></span></button></div>')
+    header,n = re.subn(r'<div class="header-actions">.*?</div>',lambda _:actions,header,count=1,flags=re.S)
+    assert n==1,page
     source=source[:start]+header+source[end:]
-    if 'href="nav-menus.css"' not in source:source=source.replace('</head>','<link rel="stylesheet" href="nav-menus.css"></head>')
-    if 'src="nav-menus.js"' not in source:source=source.replace('</body>','<script src="nav-menus.js"></script></body>')
+    if 'href="nav-menus.css"' not in source:
+        source=source.replace('</head>','<link rel="stylesheet" href="nav-menus.css"></head>')
+    if 'src="nav-menus.js"' not in source:
+        source=source.replace('</body>','<script src="nav-menus.js"></script></body>')
     page.write_text(source)
 
 # Give every menu card a corresponding, readable price destination.
@@ -93,4 +157,4 @@ else:
     source=source[:position]+overview+source[position:]
 page.write_text(source)
 (ROOT/'locales/navigation.json').write_text(json.dumps(translations,ensure_ascii=False,indent=2)+'\n')
-print('Built eight-product pricing and two-tool menus on eight site headers, plus a shared pricing overview.')
+print('Built the product, pricing, tools and support navigation on public headers.')

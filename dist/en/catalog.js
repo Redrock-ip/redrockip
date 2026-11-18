@@ -134,7 +134,7 @@
     const product = products[selected];
     const scenario = form.elements.scenario.value.trim();
     const lines = [
-      'RED ROCK · Proxy Service Requirements',
+      'REDROCK · Proxy Service Requirements',
       `Proxy type: ${product.name}`,
       `Required locations: ${region}`,
       `${product.traffic ? 'Estimated data usage' : 'Planned IP count'}: ${Number(quantity.value)} ${product.unit}`,

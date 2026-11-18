@@ -106,9 +106,9 @@
       if (fields.subject.value.trim().length < 2) fields.subject.setCustomValidity('Enter a subject with at least 2 characters.');
       if (fields.message.value.trim().length < 10) fields.message.setCustomValidity('Enter at least 10 characters of detail.');
       if (!form.reportValidity()) return;
-      const subject = `[RED ROCK Inquiry] ${fields.subject.value.trim()}`;
+      const subject = `[REDROCK Inquiry] ${fields.subject.value.trim()}`;
       const body = [
-        'Hello RED ROCK team:', '',
+        'Hello REDROCK team:', '',
         `Name: ${fields.name.value.trim()}`,
         `Reply email: ${fields.email.value.trim()}`,
         `Inquiry type: ${fields.topic.value}`,

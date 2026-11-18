@@ -41,7 +41,7 @@
  }
  function queueScroll(){if(queued)return;queued=true;requestAnimationFrame(onScroll);}
  window.addEventListener('scroll',queueScroll,{passive:true});
- window.addEventListener('resize',()=>{if(window.innerWidth>900)closeMenu();queueScroll();},{passive:true});
+ window.addEventListener('resize',()=>{if(window.innerWidth>1040)closeMenu();queueScroll();},{passive:true});
  onScroll();
  if('IntersectionObserver'in window){
   const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('is-visible');observer.unobserve(entry.target);}}),{threshold:.04,rootMargin:'0px 0px -16px 0px'});

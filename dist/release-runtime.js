@@ -41,20 +41,42 @@
     const email = $('auth-email'), password = $('auth-password'), submit = $('login-submit');
     const google = $('google-signin'), output = $('form-status');
     const connected = has('login');
-    for (const control of [email,password,submit,$('remember-email'),$('password-toggle')]) control.disabled = !connected;
+    const remember = $('remember-email'), toggle = $('password-toggle'), caps = $('caps-warning');
+    const rememberKey = 'redrock_remember_email';
+    const writeRemembered = value => {
+      try {
+        if (value) localStorage.setItem(rememberKey,value);
+        else localStorage.removeItem(rememberKey);
+      } catch { /* Storage may be disabled. */ }
+    };
+    if (connected) {
+      try {
+        const savedEmail = localStorage.getItem(rememberKey);
+        if (savedEmail) { email.value = savedEmail; remember.checked = true; }
+      } catch { /* The login form still works. */ }
+    }
+    remember.addEventListener('change',() => { if (!remember.checked) writeRemembered(''); });
+    for (const control of [email,password,submit,remember,toggle]) control.disabled = !connected;
     google.disabled = !has('startGoogleLogin');
-    $('password-toggle').addEventListener('click', () => {
-      const visible = password.type !== 'password';
-      password.type = visible ? 'password' : 'text';
-      $('password-toggle').setAttribute('aria-pressed',String(!visible));
+    toggle.addEventListener('click', () => {
+      const show = password.type === 'password';
+      password.type = show ? 'text' : 'password';
+      toggle.setAttribute('aria-pressed',String(show));
+      toggle.setAttribute('aria-label',show ? t('隐藏密码','Hide password') : t('显示密码','Show password'));
     });
+    for (const event of ['keydown','keyup']) {
+      password.addEventListener(event,e => { caps.hidden = !e.getModifierState('CapsLock'); });
+    }
+    password.addEventListener('blur',() => { caps.hidden = true; });
     login.addEventListener('submit',event => {
       event.preventDefault();
       if (!connected || !login.reportValidity()) return;
       action(submit,output,async () => {
-        const result = await call('login',{email:email.value.trim(),password:password.value,remember:$('remember-email').checked});
+        const address = email.value.trim();
+        const result = await call('login',{email:address,password:password.value,remember:remember.checked});
         password.value = '';
-        if (!result) throw new Error('Sign-in failed');
+        if (!result || result.ok === false) throw new Error('Sign-in failed');
+        writeRemembered(remember.checked ? address : '');
         redirect(result.redirect,local('/dashboard'));
       });
     });

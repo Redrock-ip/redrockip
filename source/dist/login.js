@@ -30,6 +30,7 @@
   });
 
   const form = document.querySelector('#login-form');
+  if (!form) return;
   const email = document.querySelector('#auth-email');
   const password = document.querySelector('#auth-password');
   const remember = document.querySelector('#remember-email');

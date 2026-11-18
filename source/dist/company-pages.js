@@ -106,9 +106,9 @@
       if (fields.subject.value.trim().length < 2) fields.subject.setCustomValidity('请填写至少 2 字的主题。');
       if (fields.message.value.trim().length < 10) fields.message.setCustomValidity('请填写至少 10 字的具体需求。');
       if (!form.reportValidity()) return;
-      const subject = `[RED ROCK 咨询] ${fields.subject.value.trim()}`;
+      const subject = `[REDROCK 咨询] ${fields.subject.value.trim()}`;
       const body = [
-        '您好，RED ROCK 团队：', '',
+        '您好，REDROCK 团队：', '',
         `称呼：${fields.name.value.trim()}`,
         `回复邮箱：${fields.email.value.trim()}`,
         `咨询类型：${fields.topic.value}`,

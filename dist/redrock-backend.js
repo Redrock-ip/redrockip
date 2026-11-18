@@ -2,6 +2,12 @@
 window.RedRockBackend = {
   allowedRedirectOrigins: [],
   // login: async ({email, password, remember}, context) => ({redirect: '/dashboard'}),
+  // getRegistrationCaptcha: async (input, context) => ({challengeId, imageUrl}),
+  // sendRegistrationCode: async ({email, challengeId, captcha}, context) => ({ok: true, retryAfterSeconds: 60}),
+  // registerAccount: async ({email, code, password, inviteCode, termsAccepted}, context) => ({ok: true, redirect}),
+  // getRecoveryCaptcha: async (input, context) => ({challengeId, imageUrl}),
+  // sendRecoveryCode: async ({email, challengeId, captcha}, context) => ({ok: true, retryAfterSeconds: 60}),
+  // resetPassword: async ({email, code, newPassword}, context) => ({ok: true}),
   // startGoogleLogin: async (input, context) => ({redirect}),
   // loadStartingPrices: async (input, context) => ({prices: {dynamic: "$0.50/GB 起"}}),
   // loadPurchaseCatalog: async (input, context) => ({products: [...]}),

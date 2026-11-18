@@ -127,7 +127,7 @@
   }
   window.addEventListener('scroll', queueScroll, { passive: true });
   window.addEventListener('resize', () => {
-    if (window.innerWidth > 900) closeMenu();
+    if (window.innerWidth > 1040) closeMenu();
     queueScroll();
   }, { passive: true });
   updateScroll();

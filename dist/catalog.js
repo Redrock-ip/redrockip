@@ -134,7 +134,7 @@
     const product = products[selected];
     const scenario = form.elements.scenario.value.trim();
     const lines = [
-      'RED ROCK · 代理服务需求',
+      'REDROCK · 代理服务需求',
       `代理类型：${product.name}`,
       `所需地区：${region}`,
       `${product.traffic ? '预计流量' : '计划 IP 数量'}：${Number(quantity.value)} ${product.unit}`,

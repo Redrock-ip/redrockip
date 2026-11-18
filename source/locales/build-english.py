@@ -11,6 +11,9 @@ DIST = ROOT / 'dist'
 WORK = HERE
 EN = DIST / 'en'
 EN.mkdir(exist_ok=True)
+account_builder = ROOT / 'scripts/build-account-pages.py'
+if account_builder.exists():
+    subprocess.run(['python', str(account_builder), '--root', str(ROOT)], check=True)
 workspace_builder = ROOT / 'scripts/build-workspace-pages.py'
 if workspace_builder.exists():
     subprocess.run(['python', str(workspace_builder), '--root', str(ROOT)], check=True)
@@ -22,7 +25,7 @@ if nav_builder.exists():
 locale_source = ROOT / 'locales'
 locale_source.mkdir(exist_ok=True)
 translations = {}
-groups = ['marketing', 'company', 'account', 'tools', 'navigation']
+groups = ['marketing', 'company', 'account', 'account-recovery', 'tools', 'navigation']
 groups += sorted(p.stem for p in WORK.glob('workspace*.json'))
 groups += ['common', 'corrections']
 for group in groups:
@@ -42,8 +45,8 @@ def translate(text):
 
 tools_old = '<div class="footer-group"><span>检测工具</span><a href="proxy-checker.html">代理检测</a><a href="device-checker.html">设备检测</a><a href="faq.html">常见问题</a></div>'
 tools_new = '<div class="footer-group"><span>检测工具</span><a href="proxy-checker.html">代理检测</a><a href="device-checker.html">设备检测</a></div><div class="footer-group footer-support"><span>帮助与支持</span><a href="faq.html">常见问题</a><a href="contact.html">联系咨询</a></div>'
-company_old = '<div class="footer-group"><span>RED ROCK</span><a href="about.html">关于我们</a><a href="contact.html">联系咨询</a><a href="brand-assets.html">品牌资源</a></div>'
-company_new = '<div class="footer-group"><span>RED ROCK</span><a href="about.html">关于我们</a><a href="brand-assets.html">品牌资源</a></div>'
+company_old = '<div class="footer-group"><span>REDROCK</span><a href="about.html">关于我们</a><a href="contact.html">联系咨询</a><a href="brand-assets.html">品牌资源</a></div>'
+company_new = '<div class="footer-group"><span>REDROCK</span><a href="about.html">关于我们</a><a href="brand-assets.html">品牌资源</a></div>'
 
 def locale_link(page, english):
     route = '' if page == 'index' else page

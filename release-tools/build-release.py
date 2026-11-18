@@ -12,7 +12,7 @@ TOOLS = ROOT / 'release-tools'
 SOURCE = ROOT / 'source' / 'dist'
 REMOVED = {'dashboard.js', 'workspace-demo.js', 'workspace-demo.css',
            'workspace-orders.js', 'workspace-usage.js', 'workspace-affiliate.js',
-           'workspace-recharge.js', 'workspace-service.js'}
+           'workspace-recharge.js', 'workspace-service.js', 'recovery-preview.js', 'registration-preview.js'}
 SVG = re.compile(r'<svg\b[^>]*>.*?</svg>', re.DOTALL | re.IGNORECASE)
 CLASS = lambda name: f'contains(concat(" ",normalize-space(@class)," ")," {name} ")'
 
@@ -185,6 +185,11 @@ def rewrite_page(path, target):
         set_disabled(ids('auth-email','auth-password','password-toggle','remember-email','login-submit','google-signin'))
         for n in main.xpath('.//noscript'):
             set_text(n,js_required)
+
+    if stem in ('register','forgot-password'):
+        preview_note = 'register-preview-note' if stem == 'register' else 'recovery-preview-note'
+        hide(preview_note)
+        write(preview_note,'')
 
     is_workspace = stem == 'dashboard' or 'dashboard' in relative.parts
     if is_workspace:

@@ -1,4 +1,4 @@
-# RED ROCK 接口接入
+# REDROCK 接口接入
 
 在 `release-tools/redrock-backend.js` 或部署目录中的 `dist/redrock-backend.js` 注册 `window.RedRockBackend`。配置脚本以普通 JS 文件加载。下表中的方法均为可选，按对应功能接入。可直接调用站点自己的客户端或封装 `fetch`。把密钥、支付签名和请求鉴权留在服务端。
 
@@ -7,6 +7,12 @@
 | 方法 | 请求 | 成功返回 |
 | --- | --- | --- |
 | `login` | `{email, password, remember}` | `{redirect}` 会话由服务端建立，可省略跳转字段以进入当前语言的控制台 |
+| `getRegistrationCaptcha` | `{}` | `{challengeId, imageUrl}`，服务端的一次性图形验证码 |
+| `sendRegistrationCode` | `{email, challengeId, captcha}` | `{ok: true, retryAfterSeconds?}`，注册邮件验证码请求已受理 |
+| `registerAccount` | `{email, code, password, inviteCode?, termsAccepted}` | `{ok: true, redirect?}`，账户已创建，服务端可建立会话并返回安全跳转 |
+| `getRecoveryCaptcha` | `{}` | `{challengeId, imageUrl}`，服务端的一次性图形验证码 |
+| `sendRecoveryCode` | `{email, challengeId, captcha}` | `{ok: true, retryAfterSeconds?}`，邮箱验证码请求已受理 |
+| `resetPassword` | `{email, code, newPassword}` | `{ok: true}`，密码已重置 |
 | `startGoogleLogin` | `{}` | `{redirect}` 服务端生成的登录地址 |
 | `loadStartingPrices` | `{}` | `{prices}`，产品 ID 对应当地语言的最低单位起价文本 |
 | `loadPurchaseCatalog` | `{}` | `{products}`，结构见下文 |
@@ -19,6 +25,14 @@
 | `loadUnlimitedUsage` | `{keyId, range}` | 总流量、上传与下载、带宽、连接数和趋势序列 |
 | `requestService` | `{productId, mode, fields}` | `{connection, details}`，`details` 为 `[{label,value}]` |
 | `mountPage` | 单个参数 `{path, language, main, tools}` | 完成相应页面的加载与渲染 |
+
+## 登录、注册与找回密码
+
+正式站提供 `/login`、`/register`、`/forgot-password` 及对应 `/en/` 页面。登录成功后由服务端建立会话。勾选「记住邮箱」时浏览器只保存邮箱地址。
+
+注册使用 `getRegistrationCaptcha`、`sendRegistrationCode` 和 `registerAccount`。注册与密码找回应各自绑定验证码用途。注册网址的 `invitecode` 参数可预填邀请码，服务端需要验证邀请码与条款同意状态。成功响应可以提供 `redirect`；省略时页面会显示创建成功与返回登录入口。注册页的条款和隐私链接使用正式站的 `/terms` 和 `/privacy`。
+
+密码找回使用 `getRecoveryCaptcha`、`sendRecoveryCode` 和 `resetPassword`。两种流程的图形挑战 `imageUrl` 可以是同源 URL，或 PNG、JPEG、GIF、WebP 的 Base64 图片，数据 URL 总长度上限为 1.4 MB。请在服务端生成验证码，配置有效期、单次使用与速率限制，并将挑战 ID 与请求绑定。前端按原站的六位邮件验证码与至少六字符密码规则校验，服务端仍需验证。成功受理邮件请求后，前端至少等待 60 秒才开放重发。响应应避免暴露邮箱是否注册。密码重置成功后，用户通过「返回登录」用新密码登录。邮箱验证码和密码只传给你配置的接口。
 
 ## 产品目录和订单
 

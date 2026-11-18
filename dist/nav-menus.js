@@ -1,23 +1,149 @@
 (() => {
   'use strict';
-  const header = document.querySelector('.site-header');
+  const header = document.querySelector('.site-header--capsule');
   if (!header) return;
-  const menus = [...header.querySelectorAll('details.nav-dropdown')];
-  if (!menus.length) return;
+  const nav = header.querySelector('#nav');
+  const brand = header.querySelector('.brand');
+  const actions = header.querySelector('.header-actions');
+  const logo = brand.querySelector('.original-logo');
+  const menus = [...nav.querySelectorAll('details.nav-dropdown')];
 
   const hoverMedia = window.matchMedia('(hover: hover) and (pointer: fine)');
   const motionMedia = window.matchMedia('(prefers-reduced-motion: reduce)');
   const state = new Map(menus.map(menu => [menu, {
     timer: null, hovered: false, animation: null, version: 0,
-    closing: false, visualOpen: menu.open
+    closing: false, visualOpen: menu.open, held: false
   }]));
   let lastWidth = window.innerWidth;
-  const breakpoint = () => document.documentElement.lang === 'en' ? 1180 : 900;
-  const allowsHover = () => hoverMedia.matches && window.innerWidth > breakpoint();
-  const hasFocus = menu => menu.contains(document.activeElement);
+  const desktop = () => window.innerWidth > 1040;
+  const allowsHover = () => hoverMedia.matches && desktop();
+  const hasFocus = menu => menu.contains(document.activeElement) &&
+    (document.activeElement.matches(':focus-visible') || menu.querySelector('.mega-panel')?.contains(document.activeElement));
   const isMouse = event => event.pointerType === 'mouse';
   const allowsMotion = () => document.documentElement.dataset?.motion === 'on' ||
     (document.documentElement.dataset?.motion !== 'off' && !motionMedia.matches);
+
+  const surface = document.createElement('div');
+  surface.className = 'nav-surface';
+  surface.setAttribute('aria-hidden','true');
+  header.prepend(surface);
+  const highlight = document.createElement('span');
+  highlight.className = 'nav-highlight';
+  highlight.setAttribute('aria-hidden','true');
+  nav.prepend(highlight);
+
+  const itemSelector = '#nav > a, #nav > .nav-dropdown > summary, #nav > .nav-split';
+  let hoveredItem = null;
+  let stagePending = false;
+  let lastScroll = window.scrollY;
+  let descent = 0;
+
+  function updateStage() {
+    stagePending = false;
+    if (!desktop()) return;
+    const compact = header.hasAttribute('data-nav-compact');
+    const active = menus.find(menu => state.get(menu).visualOpen);
+    const panel = active?.querySelector('.mega-panel');
+    const iconWidth = logo.offsetWidth + 16;
+    const sideGap = 5;
+    const rowShift = compact ? (iconWidth - actions.offsetWidth) / 2 : 0;
+    const column = nav.offsetLeft + rowShift;
+    const width = nav.offsetWidth + (compact ? iconWidth + actions.offsetWidth + sideGap * 2 : 0);
+    const height = nav.offsetHeight + (panel ? panel.offsetHeight + 5 : 0);
+    const values = {
+      '--nav-surface-width':Math.max(width,panel?.offsetWidth || 0),
+      '--nav-surface-height':height,
+      '--nav-surface-top':nav.offsetTop,
+      '--nav-row-shift':rowShift,
+      '--nav-panel-shift':-rowShift,
+      '--nav-brand-shift':compact ? column - iconWidth - sideGap - brand.offsetLeft : 0,
+      '--nav-actions-shift':compact ? column + nav.offsetWidth + sideGap - actions.offsetLeft : 0
+    };
+    for (const [name,value] of Object.entries(values)) header.style.setProperty(name,value + 'px');
+    header.toggleAttribute('data-nav-expanded',Boolean(panel));
+    const focused = document.activeElement?.matches(':focus-visible')
+      ? document.activeElement.closest(itemSelector) : null;
+    const anchor = hoveredItem || focused || active?.querySelector('summary').closest(itemSelector) ||
+      nav.querySelector(':scope > a[aria-current], :scope > .nav-dropdown.is-active > summary, :scope > .nav-split.is-active');
+    highlight.toggleAttribute('data-visible',Boolean(anchor));
+    if (anchor) {
+      highlight.style.setProperty('--nav-highlight-x',anchor.offsetLeft+'px');
+      highlight.style.setProperty('--nav-highlight-y',anchor.offsetTop+'px');
+      highlight.style.setProperty('--nav-highlight-width',anchor.offsetWidth+'px');
+      highlight.style.setProperty('--nav-highlight-height',anchor.offsetHeight+'px');
+    }
+    header.setAttribute('data-stage-ready','');
+  }
+
+  function queueStage() {
+    if (stagePending) return;
+    stagePending = true;
+    window.requestAnimationFrame(updateStage);
+  }
+
+  function revealHeader() {
+    descent = 0;
+    header.removeAttribute('data-nav-tucked');
+  }
+
+  function syncScroll() {
+    const y = Math.max(0,window.scrollY);
+    const delta = y - lastScroll;
+    lastScroll = y;
+    const before = header.hasAttribute('data-nav-compact');
+    const compact = desktop() && y > (before ? 22 : 62);
+    header.toggleAttribute('data-nav-compact',compact);
+    if (compact !== before) queueStage();
+    if (!compact || !allowsMotion() || delta < -2 || nav.querySelector(':focus-visible')) {
+      revealHeader();
+    } else if (delta > 0 && y > 220) {
+      descent += delta;
+      if (descent > 150 && !header.matches(':hover') && !menus.some(menu => menu.open)) {
+        header.setAttribute('data-nav-tucked','');
+      }
+    }
+  }
+
+  nav.addEventListener('pointerover',event => {
+    const item = event.target.closest(itemSelector);
+    if (!allowsHover() || !isMouse(event) || !item) return;
+    hoveredItem = item;
+    if (item.tagName === 'A' && !menus.some(menu => menu.querySelector('.mega-panel')?.contains(document.activeElement))) {
+      menus.forEach(menu => close(menu));
+    }
+    queueStage();
+  });
+  nav.addEventListener('pointermove',event => {
+    if (!allowsMotion() || !allowsHover() || !isMouse(event)) return;
+    const area = surface.getBoundingClientRect();
+    surface.style.setProperty('--glow-x',event.clientX-area.left+'px');
+    surface.style.setProperty('--glow-y',event.clientY-area.top+'px');
+    surface.setAttribute('data-lit','');
+  },{passive:true});
+  nav.addEventListener('pointerleave',() => {
+    hoveredItem = null;
+    surface.removeAttribute('data-lit');
+    queueStage();
+  });
+  header.addEventListener('focusin',() => {revealHeader();queueStage();});
+  header.addEventListener('focusout',queueStage);
+  window.addEventListener('scroll',syncScroll,{passive:true});
+  window.addEventListener('pointermove',event => {
+    if (event.clientY < 24 && header.hasAttribute('data-nav-tucked')) revealHeader();
+  },{passive:true});
+  if (typeof ResizeObserver === 'function') {
+    const sizes = new ResizeObserver(queueStage);
+    for (const element of [nav,actions,...nav.querySelectorAll('.mega-panel')]) sizes.observe(element);
+  }
+  new MutationObserver(() => {
+    if (!allowsMotion()) {
+      revealHeader();
+      surface.removeAttribute('data-lit');
+    }
+    queueStage();
+  }).observe(document.documentElement,{attributes:true,attributeFilter:['data-motion']});
+  syncScroll();
+  updateStage();
 
   function stopAnimation(menu) {
     const current = state.get(menu);
@@ -48,8 +174,10 @@
     menu.open = false;
     current.closing = false;
     current.visualOpen = false;
+    current.held = false;
     stopAnimation(menu);
     restorePanel(menu);
+    queueStage();
   }
 
   function fade(menu, from, to, duration, complete) {
@@ -63,7 +191,11 @@
     const version = current.version;
     let animation;
     try {
-      animation = panel.animate([{ opacity: from }, { opacity: to }], {
+      const frames = desktop() ? [
+        {opacity:from,translate:to === 1 && from === 0 ? '0 -3px' : '0 0'},
+        {opacity:to,translate:to === 1 ? '0 0' : '0 -7px'}
+      ] : [{opacity:from},{opacity:to}];
+      animation = panel.animate(frames, {
         duration, easing: 'cubic-bezier(.2,.7,.3,1)', fill: 'both'
       });
     } catch {
@@ -103,6 +235,7 @@
     const from = opacity(panel, 1);
     current.closing = true;
     current.visualOpen = false;
+    queueStage();
     menu.dataset.navClosing = 'true';
     panel.inert = true;
     panel.setAttribute('aria-hidden', 'true');
@@ -134,8 +267,10 @@
     current.visualOpen = true;
     restorePanel(menu);
     menu.open = true;
+    revealHeader();
     closeSiblings(menu);
-    fade(menu, from, 1, 180);
+    queueStage();
+    fade(menu,from,1,desktop() ? 240 : 180);
   }
 
   function enter(menu, event) {
@@ -161,10 +296,11 @@
   }
 
   menus.forEach(menu => {
-    menu.addEventListener('pointerenter', event => enter(menu, event));
+    const triggerArea = menu.closest('.nav-split') || menu;
+    triggerArea.addEventListener('pointerenter', event => enter(menu, event));
     menu.querySelector('.mega-panel')?.addEventListener('pointerenter', event => enter(menu, event));
-    menu.addEventListener('pointerleave', event => {
-      if (!isMouse(event) || menu.contains(event.relatedTarget)) return;
+    triggerArea.addEventListener('pointerleave', event => {
+      if (!isMouse(event) || triggerArea.contains(event.relatedTarget)) return;
       state.get(menu).hovered = false;
       scheduleClose(menu);
     });
@@ -178,7 +314,9 @@
       event.preventDefault();
       // Enter/Space dispatches the same native summary click. Start the fade in
       // this task so no fully opaque frame appears before the toggle event.
-      if (!menu.open || state.get(menu).closing) open(menu);
+      const current = state.get(menu);
+      if (!menu.open || current.closing) open(menu);
+      else if (allowsHover() && current.hovered && event.detail > 0 && !current.held) current.held = true;
       else close(menu);
     });
     menu.addEventListener('toggle', () => {
@@ -196,6 +334,10 @@
   });
 
   function reset() {
+    hoveredItem = null;
+    revealHeader();
+    syncScroll();
+    queueStage();
     menus.forEach(menu => {
       state.get(menu).hovered = false;
       if (menu.querySelector('.mega-panel')?.contains(document.activeElement)) {
@@ -212,6 +354,7 @@
   hoverMedia.addEventListener('change', reset);
   motionMedia.addEventListener('change', () => {
     if (allowsMotion()) return;
+    revealHeader();
     menus.forEach(menu => {
       if (state.get(menu).closing) finishClose(menu);
       else stopAnimation(menu);

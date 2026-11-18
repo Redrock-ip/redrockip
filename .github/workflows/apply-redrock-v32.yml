@@ -1,0 +1,65 @@
+name: Apply REDROCK v32 to main
+
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/apply-redrock-v32.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  apply-v32:
+    if: github.event_name == 'workflow_dispatch' || github.event.head_commit.message == 'Start REDROCK v32 main update'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main, with history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+      - name: Verify archived v32 and update website files
+        shell: bash
+        run: |
+          set -euo pipefail
+          archive="$RUNNER_TEMP/redrock-v32.zip"
+          git show b5b150cfd6238f6add73a66b6e5c1e81fafaf697:releases/REDROCK-production-frontend-v32.zip > "$archive"
+          echo 'eec827dad13a5e4c761d21c408a450cc90048876f7111b1302feb8cf958cdde4  '"$archive" | sha256sum -c -
+          mkdir -p "$RUNNER_TEMP/redrock-v32"
+          unzip -q "$archive" -d "$RUNNER_TEMP/redrock-v32"
+          src="$RUNNER_TEMP/redrock-v32/RED-ROCK"
+          if [ ! -f "$src/dist/index.html" ]; then
+            src=$(find "$RUNNER_TEMP/redrock-v32" -type f -path '*/dist/index.html' -printf '%h\n' | head -1)
+            test -n "$src"
+            src="${src%/dist}"
+          fi
+          test -f "$src/dist/index.html"
+          for dir in dist source deploy release-tools; do
+            if [ -d "$src/$dir" ]; then
+              mkdir -p "$dir"
+              rsync -a --delete "$src/$dir/" "$dir/"
+            fi
+          done
+          for name in CONNECT-API.md README-上线说明.md REVISION.txt SHA256SUMS.txt; do
+            if [ -f "$src/$name" ]; then cp "$src/$name" "$name"; fi
+          done
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A dist source deploy release-tools CONNECT-API.md README-上线说明.md REVISION.txt SHA256SUMS.txt
+          if ! git diff --cached --quiet; then
+            git commit -m 'Deploy REDROCK frontend v32 to main'
+            git push origin HEAD:main
+          else
+            echo 'v32 already matches main files'
+          fi
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+      - name: Upload refreshed dist
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
+      - name: Deploy refreshed pages
+        uses: actions/deploy-pages@v4

@@ -3228,6 +3228,7 @@
   });
  });
  window.addEventListener('popstate', () => { closeDialog(); switchSelection(readSelection(window.location.search),{restore:true}); });
+
  preview.addEventListener('click', async () => {
   if (reviewing || preview.disabled) return;
   reviewing = true;
@@ -3268,7 +3269,9 @@
  function closeDialog() { if (dialog.open) dialog.close(); }
  $('#purchase-order-close').addEventListener('click', closeDialog);
  $('#purchase-order-edit').addEventListener('click', closeDialog);
- dialog.addEventListener('close', () => preview.focus());
+ dialog.addEventListener('close', () => {
+  preview.focus();
+ });
  const outside = event => { const rect = dialog.getBoundingClientRect(); return event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom; };
  dialog.addEventListener('pointerdown', event => { backdrop = event.target === dialog && outside(event); });
  dialog.addEventListener('pointercancel', () => { backdrop = false; });

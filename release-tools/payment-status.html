@@ -1,0 +1,19 @@
+<dialog class="workspace-dialog release-payment-dialog" id="payment-status-window" aria-labelledby="payment-status-title" data-payment-status="pending">
+  <div class="release-payment-header">
+    <span>[[HEADER]]</span>
+    <button id="payment-status-close" type="button" aria-label="[[CLOSE]]">×</button>
+  </div>
+  <div class="payment-status-row" role="status" aria-live="polite">
+    <div>
+      <h2 id="payment-status-title" tabindex="-1">[[TITLE]]</h2>
+      <p id="payment-status-description">[[DESCRIPTION]]</p>
+    </div>
+    <span class="payment-status-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="payment-status-badge"><i aria-hidden="true"></i>[[PAID]]</span>
+  </div>
+  <dl class="payment-details">
+    <div><dt>[[ORDER]]</dt><dd id="payment-status-order">—</dd></div>
+    <div><dt>[[AMOUNT]]</dt><dd id="payment-status-amount">—</dd></div>
+  </dl>
+  <button class="workspace-secondary" type="button" id="payment-status-retry" hidden>[[RETRY]]</button>
+</dialog>

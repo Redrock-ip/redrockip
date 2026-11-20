@@ -15,7 +15,24 @@
 <form id="purchase-promo" class="purchase-promo"><label for="purchase-promo-code">优惠码</label><div class="purchase-promo-row"><input id="purchase-promo-code" placeholder="输入优惠码" maxlength="24" autocomplete="off" spellcheck="false" aria-describedby="purchase-promo-hint purchase-promo-status" disabled><button class="workspace-secondary" type="submit" disabled>应用</button></div><small id="purchase-promo-hint">如有优惠码，请输入后应用。</small><p class="ws-status" id="purchase-promo-status" role="status"></p></form><dl id="purchase-promo-breakdown" class="ws-purchase-summary-list" hidden><div><dt>原价</dt><dd id="purchase-promo-subtotal">—</dd></div><div><dt>优惠金额</dt><dd id="purchase-promo-discount">—</dd></div></dl><div class="ws-purchase-total"><span>套餐金额</span><strong id="purchase-summary-total">—</strong><small>金额沿用原站 $ 标示</small></div><div class="ws-purchase-account"><span>账户可用余额</span><strong>—</strong><small>余额暂不可用</small></div>
 <button class="button ws-purchase-submit" id="purchase-preview" type="button" disabled>确认报价 ↗</button><p class="ws-purchase-summary-note">请核对套餐、期限及报价后下单。</p><p id="purchase-status" class="ws-purchase-status" role="status" aria-live="polite"></p></aside></div>
 <noscript>请启用 JavaScript 后继续。</noscript>
-<dialog class="workspace-dialog ws-purchase-order" id="purchase-order-dialog" aria-labelledby="purchase-order-title"><div class="ws-purchase-order-top"><span class="ws-purchase-kicker">ORDER REVIEW</span><button type="button" class="ws-purchase-order-close" id="purchase-order-close" aria-label="关闭订单预览">×</button></div><h2 id="purchase-order-title" tabindex="-1">检查配置，再确认购买。</h2><p>确认后将提交订单。</p><dl id="purchase-order-details" class="ws-purchase-summary-list"></dl><div class="ws-purchase-order-amount"><span>应付金额</span><strong id="purchase-order-total">—</strong></div><p class="ws-purchase-order-note">请核对报价和使用期限后提交。</p><p id="purchase-live-status" class="demo-status" role="status"></p><div class="ws-purchase-order-actions"><button type="button" class="workspace-secondary" id="purchase-order-edit">继续选择</button><button type="button" class="button" id="purchase-live-confirm" disabled>确认下单</button></div></dialog>
+<dialog class="workspace-dialog ws-purchase-order" id="purchase-order-dialog" aria-labelledby="purchase-order-title">
+  <div class="ws-purchase-order-top">
+    <span class="ws-purchase-kicker" id="purchase-review-tag">ORDER REVIEW</span>
+    <button type="button" class="ws-purchase-order-close" id="purchase-order-close" aria-label="关闭订单预览">×</button>
+  </div>
+  <div class="ws-purchase-order-review" id="purchase-order-review">
+    <h2 id="purchase-order-title" tabindex="-1">检查配置，再确认购买。</h2>
+    <p>确认后将提交订单。</p>
+    <dl id="purchase-order-details" class="ws-purchase-summary-list"></dl>
+    <div class="ws-purchase-order-amount"><span>应付金额</span><strong id="purchase-order-total">—</strong></div>
+    <p class="ws-purchase-order-note">请核对报价和使用期限后提交。</p>
+    <p id="purchase-live-status" class="demo-status" role="status"></p>
+    <div class="ws-purchase-order-actions">
+      <button type="button" class="workspace-secondary" id="purchase-order-edit">继续选择</button>
+      <button type="button" class="button" id="purchase-live-confirm" disabled>确认下单</button>
+      </div>
+  </div>
+  </dialog>
 </section>
 </main><footer class="workspace-footer"><span>© 2026 RED ROCK （HK） LIMITED</span><a href="/contact.html">support@redrock-ip.com ↗</a></footer></div><button class="motion-control" type="button" aria-pressed="true" aria-label="暂停页面动态效果"><span class="motion-icon" aria-hidden="true">Ⅱ</span><span id="motion-label">暂停动效</span></button><script src="/workspace-shell.js"></script><script src="/redrock-backend.js"></script><script src="/release-runtime.js"></script><script src="/workspace-purchase.js"></script><!-- REDROCK-CONTACT-WIDGET:START -->
 <button id="contact-launcher" class="contact-launcher" type="button" aria-haspopup="dialog" aria-controls="contact-dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5A8.5 8.5 0 0 1 12.5 20H5l-3 2V11.5A8.5 8.5 0 0 1 10.5 3h2A8.5 8.5 0 0 1 21 11.5Z"/><path d="M7 10h10M7 14h6"/></svg><span>联系我们</span></button>

@@ -63,9 +63,14 @@ def add_language(html_text, page, english):
     return re.sub(r'(</header>)', link + r'\1', html_text, count=1)
 
 source_pages = sorted(p for p in DIST.rglob('*.html') if EN not in p.parents)
+loading_css = '<link data-navigation-loading rel="stylesheet" href="/loading-spinner.css">'
+loading_script = '<script data-navigation-loading src="/navigation-loading.js"></script>'
+loading_excluded = {'dashboard/purchase', 'payment-preview', 'payment-options', 'loading-options'}
 for page in source_pages:
     relative = page.relative_to(DIST)
     route = '' if relative.as_posix() == 'index.html' else relative.with_suffix('').as_posix()
+    if route == 'blog' or route.startswith('blog/'):
+        continue
     english_path = EN / relative
     english_path.parent.mkdir(parents=True, exist_ok=True)
     source = page.read_text()
@@ -77,6 +82,10 @@ for page in source_pages:
     source = source.replace('<link rel="stylesheet" href="/locale.css">', '')
     source = re.sub(r'<script src="(?:\.?\.?/)*language-switch.js"></script>', '', source)
     source = source.replace('<script src="/language-switch.js"></script>', '')
+    source = source.replace(loading_css, '').replace(loading_script, '')
+    if route not in loading_excluded:
+        source = source.replace('</head>', loading_css + '</head>')
+        source = source.replace('</body>', loading_script + '</body>')
     alternates = f'<link data-locale-alternate rel="alternate" hreflang="zh-CN" href="/{route}"><link data-locale-alternate rel="alternate" hreflang="en" href="/en/{route}">'
     asset_prefix = '' if page.parent == DIST else '/'
     source = source.replace('</head>', alternates + f'<link rel="stylesheet" href="{asset_prefix}locale.css"></head>')
@@ -123,7 +132,7 @@ for page in source_pages:
     english_path.write_text(english)
 
 for script in sorted(p for p in DIST.rglob('*.js') if EN not in p.parents):
-    if script.name == 'language-switch.js':
+    if script.name in {'language-switch.js', 'blog.js'}:
         continue
     english = translate(script.read_text()).replace("'zh-CN'", "'en-US'").replace('"zh-CN"', '"en-US"')
     output = EN / script.relative_to(DIST)
@@ -134,4 +143,7 @@ if data.exists():
     (locale_source / 'catalog-products.en.json').write_text(translate(data.read_text()))
 if Path(__file__).resolve() != (locale_source / 'build-english.py').resolve():
     shutil.copyfile(__file__, locale_source / 'build-english.py')
+blog_builder = ROOT / 'scripts/build-blog.py'
+if blog_builder.exists():
+    subprocess.run(['python', str(blog_builder), '--root', str(ROOT)], check=True)
 print(f'Generated {len(list(EN.rglob("*.html")))} English pages and {len(list(EN.rglob("*.js")))} localized scripts from {len(translations)} translations.')

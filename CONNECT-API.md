@@ -19,6 +19,7 @@
 | `quotePurchase` | `{productId, planId, quantity, promoCode}` | `{quoteId, totalCents, discountCents}`，服务端校验库存与优惠码，金额以分为单位 |
 | `createOrder` | `{quoteId}` | `{orderId, redirect?}`，按服务端报价生成订单，然后进入订单页或真实支付页 |
 | `createRecharge` | `{amountCents, paymentMethod}`，通道为 `online` 或 `crypto` | `{redirect}`，真实充值订单的支付地址 |
+| `loadPaymentStatus` | `{paymentRef}`，支付返回页传来的查询标识 | `{status, orderId?, totalCents?}`，`status` 为 `pending`、`paid` 或 `failed` |
 | `loadTrafficDetails` | `{productId, from, to, interval}` | 住宅动态代理和移动代理的汇总、趋势、国家分布和目标域名 |
 | `loadUsage` | `{productId, days}` | `{rows: [{date, gb}]}`，代理生成页的每日流量 |
 | `loadUnlimitedKeys` | `{}` | `{keys: [{id, label, status?, purchasedAt?}]}`，不限量已购买列表与密钥筛选 |
@@ -51,6 +52,12 @@ plans[]    → { id, label, quantity, duration, areaKey, area,
 - 普通套餐内的资源数量已计入套餐。静态住宅、数据中心和直播专线按 IP 数量下单，动态不限量的一小时套餐可调小时数。服务端重新校验数量、库存、地区、期限、优惠和结算币种。
 - 报价需要由服务端绑定当前账号、套餐与有效期。优惠码和最终成交价以此报价为准。确认下单时仅提交 `quoteId`。服务端对订单创建与充值做幂等校验，并根据支付回调确认到账。
 - 账户充值当前界面允许 $10–$2,000。若正式业务规则变更，请同步更新 `dist/dashboard/recharge.html`、`dist/en/dashboard/recharge.html` 和 `release-tools/release-runtime.js` 的范围与文字。
+
+### 外部支付返回
+
+支付回调由现有服务验证并记录。让浏览器返回同语言的 `/dashboard/orders?paymentRef=<查询标识>` 或 `/en/dashboard/orders?paymentRef=<查询标识>`，即可打开付款状态小窗。标识使用 1–200 个 URL 安全字符（字母、数字、点、下划线、短横线或波浪号），由服务端生成并绑定当前登录账号可查看的付款。
+
+接口应根据已验证的支付记录返回状态。待确认时返回 `pending`，付款确认后返回 `paid` 及订单编号 `orderId`、订单金额 `totalCents`（单位为分）。确定未完成可返回 `failed`。小窗每隔 2.5 秒查询一次等待中的付款，最多查询 20 次，之后可手动重新查询。
 
 ## 代理生成页的流量使用明细
 

@@ -14,6 +14,7 @@ window.RedRockBackend = {
   // quotePurchase: async ({productId, planId, quantity, promoCode}, context) => ({quoteId, totalCents, discountCents}),
   // createOrder: async ({quoteId}, context) => ({orderId, redirect}),
   // createRecharge: async ({amountCents, paymentMethod}, context) => ({redirect}),
+  // loadPaymentStatus: async ({paymentRef}, context) => ({status, orderId, totalCents}),
   // loadTrafficDetails: async ({productId, from, to, interval}, context) => ({summary, points, countries, domains}),
   // loadUsage: async ({productId, days}, context) => ({rows: []}),
   // loadUnlimitedKeys: async (input, context) => ({keys: []}),

@@ -12,7 +12,9 @@ TOOLS = ROOT / 'release-tools'
 SOURCE = ROOT / 'source' / 'dist'
 REMOVED = {'dashboard.js', 'workspace-demo.js', 'workspace-demo.css',
            'workspace-orders.js', 'workspace-usage.js', 'workspace-affiliate.js',
-           'workspace-recharge.js', 'workspace-service.js', 'recovery-preview.js', 'registration-preview.js'}
+           'workspace-recharge.js', 'workspace-service.js', 'recovery-preview.js', 'registration-preview.js',
+           'payment-preview.js', 'payment-preview.css'}
+PREVIEW_PAGES = {'payment-preview.html', 'payment-options.html', 'loading-options.html', 'blog-design.html'}
 SVG = re.compile(r'<svg\b[^>]*>.*?</svg>', re.DOTALL | re.IGNORECASE)
 CLASS = lambda name: f'contains(concat(" ",normalize-space(@class)," ")," {name} ")'
 
@@ -58,7 +60,8 @@ def purchase_script(content):
                       '  release.status(promoStatus,\'\');\n  renderSelectionDetails();\n  refreshActions();\n')
     content = content.replace("productPrices[product.id].starting;", "catalogLoaded ? product.starting || '' : productPrices[product.id].starting;")
     content = content.replace("plan.label || productPrices[product.id].region", "productPrices[product.id].region")
-    content = between(content, " preview.addEventListener('click'", ' function closeDialog()', (TOOLS / 'purchase-review.js').read_text())
+    content = between(content, ' function showPayment(', ' function closeDialog()', (TOOLS / 'purchase-review.js').read_text())
+    content = content.replace('  window.clearTimeout(paymentTimer);\n', '')
     content = content.replace("  layout.setAttribute('aria-busy',String(active));",
                               "  layout.setAttribute('aria-busy',String(active));\n  refreshActions();")
     return content.replace(' restorePromo();\n render();\n})();', ' restorePromo();\n render();\n loadCurrentCatalog();\n})();')
@@ -263,7 +266,8 @@ def rewrite_page(path, target):
         write_class('ws-affiliate-subtitle', t('通过专属邀请链接查看关联的推广记录。','Use your unique referral link to track referrals.'))
 
     if stem == 'purchase':
-        remove(ids('purchase-original','purchase-order-original','purchase-demo-recharge'))
+        remove(ids('purchase-original','purchase-order-original','purchase-demo-recharge',
+                   'purchase-payment-tag','purchase-payment-panel'))
         write_class('ws-purchase-field-note',t('选择需要的地区分组、使用期限及套餐。','Select the region group, term, and plan you need.'))
         rename('purchase-demo-confirm','purchase-live-confirm')
         rename('purchase-demo-status','purchase-live-status')
@@ -287,7 +291,7 @@ def rewrite_page(path, target):
         order = ids('purchase-order-dialog')[0]
         for n in order.xpath(f'.//*[{CLASS("ws-purchase-kicker")}]'):
             set_text(n,'ORDER REVIEW')
-        for n in order.xpath('./p[1]'):
+        for n in order.xpath('.//*[@id="purchase-order-review"]/p[1]'):
             set_text(n,t('确认后将提交订单。','Confirm to place your order.'))
         for n in order.xpath('.//span[normalize-space()="参考总额" or normalize-space()="Reference total"]'):
             set_text(n,t('应付金额','Total due'))
@@ -424,6 +428,22 @@ def rewrite_page(path, target):
         body.append(html.Element('script',src='/release-runtime.js'))
     head = document.xpath('//head')[0]
     head.append(html.Element('link',rel='stylesheet',href='/release.css'))
+    if stem == 'orders':
+        head.append(html.Element('link',rel='stylesheet',href='/payment-status.css'))
+        payment = (TOOLS / 'payment-status.html').read_text(encoding='utf-8')
+        for token, zh, english in [
+            ('HEADER','付款结果','Payment status'),
+            ('TITLE','正在确认支付结果','Confirming your payment'),
+            ('DESCRIPTION','正在查询该笔付款的状态。','Checking the status of this payment.'),
+            ('ORDER','订单编号','Order reference'),
+            ('AMOUNT','订单金额','Order amount'),
+            ('PAID','已支付','Paid'),
+            ('RETRY','重新查询','Check again'),
+            ('CLOSE','关闭','Close'),
+        ]:
+            payment = payment.replace(f'[[{token}]]', t(zh,english))
+        main.append(html.fragment_fromstring(payment))
+        body.append(html.Element('script',src='/payment-status.js'))
     rendered = html.tostring(document,encoding='unicode',method='html',doctype='<!doctype html>')
     rendered = re.sub(r'<span data-rr-svg="(\d+)"></span>',lambda m:svgs[int(m[1])],rendered)
     path.write_text(rendered,encoding='utf-8')
@@ -434,9 +454,12 @@ def build():
         target = Path(workspace) / 'dist'
         shutil.copytree(SOURCE,target)
         for path in sorted(target.rglob('*.html')):
-            rewrite_page(path,target)
-        for script in ('redrock-backend.js','release-runtime.js','release.css'):
-            shutil.copyfile(TOOLS/script,target/script)
+            if path.name in PREVIEW_PAGES:
+                path.unlink()
+            else:
+                rewrite_page(path,target)
+        for asset in ('redrock-backend.js','release-runtime.js','release.css','payment-status.js','payment-status.css'):
+            shutil.copyfile(TOOLS/asset,target/asset)
         for new in (target,target/'en'):
             for name in REMOVED:
                 (new/name).unlink(missing_ok=True)

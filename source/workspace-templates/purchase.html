@@ -14,5 +14,47 @@
 <form id="purchase-promo" class="purchase-promo"><label for="purchase-promo-code">优惠码</label><div class="purchase-promo-row"><input id="purchase-promo-code" placeholder="输入优惠码" maxlength="24" autocomplete="off" spellcheck="false" aria-describedby="purchase-promo-hint purchase-promo-status"><button class="workspace-secondary" type="submit">应用</button></div><small id="purchase-promo-hint">试用演示码 REDROCK10，查看 9 折效果。</small><p class="ws-status" id="purchase-promo-status" role="status"></p></form><dl id="purchase-promo-breakdown" class="ws-purchase-summary-list" hidden><div><dt>原价</dt><dd id="purchase-promo-subtotal">—</dd></div><div><dt>优惠金额</dt><dd id="purchase-promo-discount">—</dd></div></dl><div class="ws-purchase-total"><span>套餐金额</span><strong id="purchase-summary-total">—</strong><small>金额沿用原站 $ 标示</small></div><div class="ws-purchase-account"><span>账户可用余额</span><strong>—</strong><small>尚未接入真实账户</small></div>
 <button class="button ws-purchase-submit" id="purchase-preview" type="button" disabled>预览订单 <span aria-hidden="true">↗</span></button><a class="ws-purchase-original" id="purchase-original" href="https://redrock-ip.com/dashboard/purchase?tab=dynamic" target="_blank" rel="noopener">前往原站购买 ↗</a><p class="ws-purchase-summary-note">预览仅在当前页面整理，不创建真实订单或扣款。</p><p id="purchase-status" class="ws-purchase-status" role="status" aria-live="polite"></p></aside></div>
 <noscript><p class="ws-panel">选择套餐与订单预览需要 JavaScript。请通过上方链接前往原站购买。</p></noscript>
-<dialog class="workspace-dialog ws-purchase-order" id="purchase-order-dialog" aria-labelledby="purchase-order-title"><div class="ws-purchase-order-top"><span class="ws-purchase-kicker">REVIEW / LOCAL PREVIEW</span><button type="button" class="ws-purchase-order-close" id="purchase-order-close" aria-label="关闭订单预览">×</button></div><h2 id="purchase-order-title" tabindex="-1">检查配置，再确认购买。</h2><p>这是一份本地订单预览，尚未提交或支付。</p><dl id="purchase-order-details" class="ws-purchase-summary-list"></dl><div class="ws-purchase-order-amount"><span>参考总额</span><strong id="purchase-order-total">—</strong></div><p class="ws-purchase-order-note">实际价格、库存与完整使用条件，请在原站确认。</p><p id="purchase-demo-status" class="demo-status" role="status"></p><div class="ws-purchase-order-actions"><button type="button" class="workspace-secondary" id="purchase-order-edit">继续选择</button><button type="button" class="button" id="purchase-demo-confirm" hidden>确认模拟购买</button><a id="purchase-demo-recharge" class="workspace-secondary" href="/dashboard/recharge?demo=1" hidden>模拟充值</a><a class="button" id="purchase-order-original" href="https://redrock-ip.com/dashboard/purchase?tab=dynamic" target="_blank" rel="noopener">前往原站确认购买 ↗</a></div></dialog>
+<dialog class="workspace-dialog ws-purchase-order" id="purchase-order-dialog" aria-labelledby="purchase-order-title">
+  <div class="ws-purchase-order-top">
+    <span class="ws-purchase-kicker" id="purchase-review-tag">REVIEW / LOCAL PREVIEW</span>
+    <span class="payment-preview-tag" id="purchase-payment-tag" hidden>模拟订单</span>
+    <button type="button" class="ws-purchase-order-close" id="purchase-order-close" aria-label="关闭订单预览">×</button>
+  </div>
+  <div class="ws-purchase-order-review" id="purchase-order-review">
+    <h2 id="purchase-order-title" tabindex="-1">检查配置，再确认购买。</h2>
+    <p>这是一份本地订单预览，尚未提交或支付。</p>
+    <dl id="purchase-order-details" class="ws-purchase-summary-list"></dl>
+    <div class="ws-purchase-order-amount"><span>参考总额</span><strong id="purchase-order-total">—</strong></div>
+    <p class="ws-purchase-order-note">实际价格、库存与完整使用条件，请在原站确认。</p>
+    <p id="purchase-demo-status" class="demo-status" role="status"></p>
+    <div class="ws-purchase-order-actions">
+      <button type="button" class="workspace-secondary" id="purchase-order-edit">继续选择</button>
+      <button type="button" class="button" id="purchase-demo-confirm" hidden>确认模拟购买</button>
+      <a id="purchase-demo-recharge" class="workspace-secondary" href="/dashboard/recharge?demo=1" hidden>模拟充值</a>
+      <a class="button" id="purchase-order-original" href="https://redrock-ip.com/dashboard/purchase?tab=dynamic" target="_blank" rel="noopener">前往原站确认购买 ↗</a>
+    </div>
+  </div>
+  <div id="purchase-payment-panel" hidden>
+    <div class="payment-status-row">
+      <div id="purchase-payment-pending">
+        <h2 id="purchase-payment-pending-title" tabindex="-1">正在确认支付结果</h2>
+        <p>正在确认这笔模拟付款。</p>
+      </div>
+      <div id="purchase-payment-success" hidden>
+        <h2 id="purchase-payment-success-title" tabindex="-1">支付成功</h2>
+        <p>订单已确认收款。</p>
+      </div>
+      <span class="payment-status-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span class="payment-status-badge"><i aria-hidden="true"></i>已支付</span>
+    </div>
+    <dl class="payment-details">
+      <div><dt>订单编号</dt><dd id="purchase-payment-order">—</dd></div>
+      <div><dt>订单金额</dt><dd id="purchase-payment-amount">—</dd></div>
+    </dl>
+    <div class="ws-purchase-order-actions" id="purchase-payment-actions" hidden>
+      <a class="workspace-secondary" id="purchase-payment-usage" href="/dashboard/usage?demo=1">查看用量</a>
+      <a class="button" id="purchase-payment-orders" href="/dashboard/orders?demo=1">查看订单</a>
+    </div>
+  </div>
+</dialog>
 </section>

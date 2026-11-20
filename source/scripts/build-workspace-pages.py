@@ -99,6 +99,7 @@ for key,(label,style) in pages.items():
     content = fragment.read_text()
     if key == 'purchase':
         content = content.replace('[[PURCHASE_DATE]]', purchase_date)
+        document = document.replace('</head>', '<link rel="stylesheet" href="/payment-preview.css"></head>')
     if product:
         mode = {'dynamic': 'generate', 'mobile': 'generate', 'unlimited': 'bandwidth', 'short': 'batch'}.get(product['id'], 'resources')
         is_resource = mode == 'resources'

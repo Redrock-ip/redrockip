@@ -15,7 +15,24 @@
 <form id="purchase-promo" class="purchase-promo"><label for="purchase-promo-code">Promo code</label><div class="purchase-promo-row"><input id="purchase-promo-code" placeholder="Enter a promo code" maxlength="24" autocomplete="off" spellcheck="false" aria-describedby="purchase-promo-hint purchase-promo-status" disabled><button class="workspace-secondary" type="submit" disabled>Apply</button></div><small id="purchase-promo-hint">Enter your promo code and apply it to the quote.</small><p class="ws-status" id="purchase-promo-status" role="status"></p></form><dl id="purchase-promo-breakdown" class="ws-purchase-summary-list" hidden><div><dt>Subtotal</dt><dd id="purchase-promo-subtotal">—</dd></div><div><dt>Discount</dt><dd id="purchase-promo-discount">—</dd></div></dl><div class="ws-purchase-total"><span>Package amount</span><strong id="purchase-summary-total">—</strong><small>Amounts retain the original site $ symbol</small></div><div class="ws-purchase-account"><span>Available account balance</span><strong>—</strong><small>Real account not connected</small></div>
 <button class="button ws-purchase-submit" id="purchase-preview" type="button" disabled>Review quote ↗</button><p class="ws-purchase-summary-note">Check the plan, term, and quote before placing the order.</p><p id="purchase-status" class="ws-purchase-status" role="status" aria-live="polite"></p></aside></div>
 <noscript>Enable JavaScript to continue.</noscript>
-<dialog class="workspace-dialog ws-purchase-order" id="purchase-order-dialog" aria-labelledby="purchase-order-title"><div class="ws-purchase-order-top"><span class="ws-purchase-kicker">ORDER REVIEW</span><button type="button" class="ws-purchase-order-close" id="purchase-order-close" aria-label="Close order preview">×</button></div><h2 id="purchase-order-title" tabindex="-1">Review your setup before purchasing.</h2><p>Confirm to place your order.</p><dl id="purchase-order-details" class="ws-purchase-summary-list"></dl><div class="ws-purchase-order-amount"><span>Total due</span><strong id="purchase-order-total">—</strong></div><p class="ws-purchase-order-note">Check the quoted price and service term before submitting.</p><p id="purchase-live-status" class="demo-status" role="status"></p><div class="ws-purchase-order-actions"><button type="button" class="workspace-secondary" id="purchase-order-edit">Continue editing</button><button type="button" class="button" id="purchase-live-confirm" disabled>Place order</button></div></dialog>
+<dialog class="workspace-dialog ws-purchase-order" id="purchase-order-dialog" aria-labelledby="purchase-order-title">
+  <div class="ws-purchase-order-top">
+    <span class="ws-purchase-kicker" id="purchase-review-tag">ORDER REVIEW</span>
+    <button type="button" class="ws-purchase-order-close" id="purchase-order-close" aria-label="Close order preview">×</button>
+  </div>
+  <div class="ws-purchase-order-review" id="purchase-order-review">
+    <h2 id="purchase-order-title" tabindex="-1">Review your setup before purchasing.</h2>
+    <p>Confirm to place your order.</p>
+    <dl id="purchase-order-details" class="ws-purchase-summary-list"></dl>
+    <div class="ws-purchase-order-amount"><span>Total due</span><strong id="purchase-order-total">—</strong></div>
+    <p class="ws-purchase-order-note">Check the quoted price and service term before submitting.</p>
+    <p id="purchase-live-status" class="demo-status" role="status"></p>
+    <div class="ws-purchase-order-actions">
+      <button type="button" class="workspace-secondary" id="purchase-order-edit">Continue editing</button>
+      <button type="button" class="button" id="purchase-live-confirm" disabled>Place order</button>
+      </div>
+  </div>
+  </dialog>
 </section>
 </main><footer class="workspace-footer"><span>© 2026 RED ROCK （HK） LIMITED</span><a href="/en/contact.html">support@redrock-ip.com ↗</a></footer></div><button class="motion-control" type="button" aria-pressed="true" aria-label="Pause page animations"><span class="motion-icon" aria-hidden="true">Ⅱ</span><span id="motion-label">Pause motion</span></button><script src="/en/workspace-shell.js"></script><script src="/redrock-backend.js"></script><script src="/release-runtime.js"></script><script src="/en/workspace-purchase.js"></script><!-- REDROCK-CONTACT-WIDGET:START -->
 <button id="contact-launcher" class="contact-launcher" type="button" aria-haspopup="dialog" aria-controls="contact-dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5A8.5 8.5 0 0 1 12.5 20H5l-3 2V11.5A8.5 8.5 0 0 1 10.5 3h2A8.5 8.5 0 0 1 21 11.5Z"/><path d="M7 10h10M7 14h6"/></svg><span>Contact us</span></button>

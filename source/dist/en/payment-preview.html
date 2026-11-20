@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#090708">
+  <meta name="robots" content="noindex">
+  <title>Payment flow preview · REDROCK</title>
+  <script>
+    if (new URLSearchParams(location.search).get('stage') === 'loading') {
+      document.documentElement.dataset.paymentLoading = '';
+    }
+  </script>
+  <link rel="icon" href="/assets/logo.jpg">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/payment-preview.css">
+  <link rel="stylesheet" href="/loading-spinner.css">
+<link data-locale-alternate rel="alternate" hreflang="zh-CN" href="/payment-preview"><link data-locale-alternate rel="alternate" hreflang="en" href="/en/payment-preview"><link rel="stylesheet" href="../locale.css"></head>
+<body class="payment-preview">
+  <a class="skip-link" href="#main">Skip to the payment preview</a>
+  <header class="payment-preview-header">
+    <a href="/en/" class="brand" aria-label="REDROCK home">
+      <img class="original-logo" src="/assets/logo.jpg" width="40" height="40" alt="">
+      <span class="original-wordmark"><span class="wordmark-red">RED</span><span class="wordmark-rock">ROCK</span></span>
+    </a>
+    <a class="text-link" href="/en/dashboard">Back to dashboard ↗</a>
+  </header>
+  <main id="main" class="payment-preview-main">
+    <div class="payment-launcher" id="payment-launcher">
+      <h1>Payment flow preview</h1>
+      <button class="button payment-action" type="button" id="payment-open">Open payment preview <span aria-hidden="true">↗</span></button>
+      <a class="loading-preview-link" href="/en/loading-options">View loading animations</a>
+      <noscript><p>Enable JavaScript to view the payment preview.</p></noscript>
+    </div>
+
+    <div class="page-loading-preview" id="page-loading-preview" role="progressbar" aria-label="Loading page" hidden>
+      <span class="loading-spinner" data-spinner="dual" aria-hidden="true"></span>
+    </div>
+
+    <dialog id="payment-window" class="payment-window" aria-labelledby="payment-connect-title" data-payment-status="pending">
+      <div class="payment-window-top">
+        <p class="payment-preview-tag">Sample orders</p>
+        <div class="header-actions"><a class="language-switch" data-language-switch href="/payment-preview" hreflang="zh-CN" lang="zh-CN" aria-label="Switch to Chinese">中文</a><button type="button" class="payment-close" id="payment-close" aria-label="Close payment preview">×</button></div>
+      </div>
+
+      <div class="payment-status-row">
+        <div>
+          <section data-payment-stage="connect" id="payment-connect">
+            <h2 id="payment-connect-title" tabindex="-1">Connecting to checkout</h2>
+            <p>The payment link is being prepared. The payment provider will open when it is ready.</p>
+          </section>
+          <section data-payment-stage="return" id="payment-return" hidden>
+            <h2 id="payment-return-title" tabindex="-1">Confirming your payment</h2>
+            <p>This window will update when the checkout provider returns the payment result.</p>
+          </section>
+          <section data-payment-stage="complete" id="payment-complete" hidden>
+            <h2 id="payment-complete-title" tabindex="-1">Payment successful</h2>
+            <p>Payment has been confirmed for this order.</p>
+          </section>
+        </div>
+        <span class="payment-status-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="payment-status-badge"><i aria-hidden="true"></i>Paid</span>
+      </div>
+
+      <dl class="payment-details">
+        <div><dt>Order ID</dt><dd>DEMO-P042</dd></div>
+        <div><dt>Order amount</dt><dd>$50.00</dd></div>
+      </dl>
+      <div class="payment-footer">
+        <button type="button" class="button payment-action" id="payment-forward">Simulate return from checkout <span aria-hidden="true">→</span></button>
+        <button type="button" class="button payment-action" id="payment-confirm" hidden>Simulate payment completion <span aria-hidden="true">→</span></button>
+        <button type="button" class="button payment-action payment-replay" id="payment-replay" hidden>Replay preview <span aria-hidden="true">↻</span></button>
+        <button type="button" class="payment-motion" id="payment-motion" aria-pressed="false"><span id="payment-motion-icon" aria-hidden="true">▷</span><span id="payment-motion-label">Enable motion</span></button>
+        <a class="loading-preview-link" href="/en/dashboard/purchase?demo=1&amp;tab=dynamic">Try a demo purchase</a>
+      </div>
+    </dialog>
+  </main>
+  <script src="/en/payment-preview.js"></script>
+<script src="../language-switch.js"></script></body>
+</html>

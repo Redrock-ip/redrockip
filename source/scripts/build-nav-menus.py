@@ -125,7 +125,8 @@ for page in DIST.glob('*.html'):
     header = source[start:end].replace('class="site-header"','class="site-header site-header--capsule"',1)
     cls = ' aria-current="page"' if page.stem=='about' else ''
     items = (products_menu(page.stem=='products') + pricing_menu(page.stem=='pricing') + tools_menu(page.stem)
-             + f'<a href="about.html"{cls}>关于我们</a>' + support_menu(page.stem)
+             + f'<a href="about.html"{cls}>关于我们</a>'
+             + f'<a href="/blog">{word("博客","Blog")}</a>' + support_menu(page.stem)
              + f'<div class="nav-mobile-actions">{account_links()}</div>')
     nav = f'<nav id="nav" aria-label="{word("主导航","Main navigation")}">{items}</nav>'
     header,n = re.subn(r'<nav id="nav"[^>]*>.*?</nav>',lambda _:nav,header,count=1,flags=re.S)

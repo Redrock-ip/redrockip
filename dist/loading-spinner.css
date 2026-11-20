@@ -1,0 +1,83 @@
+.loading-spinner {
+  position: relative;
+  display: block;
+  flex: none;
+  width: 34px;
+  height: 34px;
+  color: #ff7d90;
+}
+
+.navigation-loading-screen {
+  position: fixed;
+  z-index: 2147483647;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  background: #090708;
+}
+
+.loading-spinner::before {
+  position: absolute;
+  inset: 0;
+  box-sizing: border-box;
+  border-radius: 50%;
+  content: '';
+  animation: loading-spin 1s linear infinite;
+}
+
+.loading-spinner[data-spinner='arc']::before {
+  border: 2px solid #432430;
+  border-top-color: currentColor;
+  border-right-color: #f15370;
+}
+
+.loading-spinner[data-spinner='comet']::before {
+  background: conic-gradient(from 40deg, transparent 30%, #823347 64%, #ef526d 90%, #ffb0bd);
+  mask-image: radial-gradient(farthest-side, transparent calc(100% - 2.5px), #000 calc(100% - 1.5px));
+  animation-duration: 1.25s;
+}
+
+.loading-spinner[data-spinner='dual']::before,
+.loading-spinner[data-spinner='dual']::after {
+  border: 2px solid transparent;
+  border-top-color: currentColor;
+  border-right-color: #823649;
+}
+
+.loading-spinner[data-spinner='dual']::before { animation-duration: 1.32s; }
+.loading-spinner[data-spinner='dual']::after {
+  position: absolute;
+  inset: 6px;
+  box-sizing: border-box;
+  border-radius: 50%;
+  border-color: transparent transparent #a7465d #f35571;
+  content: '';
+  animation: loading-spin .94s linear infinite reverse;
+}
+
+.loading-spinner[data-spinner='dots']::before {
+  inset: calc(50% - 1.5px);
+  box-shadow:
+    0 -13px 0 #ffa2b0,
+    9px -9px 0 #bd5269,
+    13px 0 0 #783244,
+    9px 9px 0 #582433,
+    0 13px 0 #592433,
+    -9px 9px 0 #813345,
+    -13px 0 0 #b9445e,
+    -9px -9px 0 #ec6b82;
+  animation: loading-spin 1.2s steps(8) infinite;
+}
+
+html[data-motion='off'] .loading-spinner::before,
+html[data-motion='off'] .loading-spinner::after { animation-play-state: paused; }
+
+@media (prefers-reduced-motion: reduce) {
+  html:not([data-motion='on']) .loading-spinner::before,
+  html:not([data-motion='on']) .loading-spinner::after { animation-play-state: paused; }
+}
+
+@keyframes loading-spin {
+  to { transform: rotate(1turn); }
+}

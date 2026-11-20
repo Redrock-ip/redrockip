@@ -100,7 +100,6 @@
   const message = result => result.reason === 'storage'
     ? 'Your browser could not save the demo. Allow local storage for this site.'
     : 'This action could not be completed. Choose again and retry.';
-  window.RedRockDemo = { ...store, url, selectedPlan, money, message };
   main.dataset.demo = 'active';
 
   for (const link of document.querySelectorAll('a[href]')) {
@@ -130,6 +129,14 @@
   lead.append(node('h2','Purchase walkthrough'),
     node('p','Use a demo balance to choose a plan. Orders and usage stay in this browser.'));
   const balance = node('strong','Demo balance ' + money(store.read().balanceCents),'demo-balance');
+  window.RedRockDemo = {
+    ...store, url, selectedPlan, money, message,
+    purchase(productId, plan) {
+      const result = store.purchase(productId, plan);
+      if (result.ok) balance.textContent = 'Demo balance ' + money(result.state.balanceCents);
+      return result;
+    }
+  };
   guideTop.append(lead,balance);
   guide.append(guideTop);
   const steps = node('div',null,'demo-links');

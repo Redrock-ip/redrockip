@@ -2959,6 +2959,12 @@
  const demoConfirm = demo && $('#purchase-demo-confirm');
  const demoRecharge = demo && $('#purchase-demo-recharge');
  const demoStatus = demo && $('#purchase-demo-status');
+ const review = $('#purchase-order-review');
+ const paymentPanel = $('#purchase-payment-panel');
+ const paymentPending = $('#purchase-payment-pending');
+ const paymentSuccess = $('#purchase-payment-success');
+ const paymentActions = $('#purchase-payment-actions');
+ let paymentTimer;
  let selected = readSelection(window.location.search), backdrop = false;
  let promoApplied = false;
  let animation = null, pending = null;
@@ -3168,6 +3174,24 @@
   });
  });
  window.addEventListener('popstate', () => { closeDialog(); switchSelection(readSelection(window.location.search),{restore:true}); });
+
+ function showPayment(state) {
+  const paying = state !== 'review';
+  const paid = state === 'paid';
+  review.hidden = paying;
+  $('#purchase-review-tag').hidden = paying;
+  $('#purchase-payment-tag').hidden = !paying;
+  paymentPanel.hidden = !paying;
+  paymentPending.hidden = paid;
+  paymentSuccess.hidden = !paid;
+  paymentActions.hidden = !paid;
+  if (paying) dialog.dataset.paymentStatus = state;
+  else delete dialog.dataset.paymentStatus;
+  const heading = $(paying ? (paid ? '#purchase-payment-success-title' : '#purchase-payment-pending-title') : '#purchase-order-title');
+  dialog.setAttribute('aria-labelledby', heading.id);
+  return heading;
+ }
+
  preview.addEventListener('click', () => {
   const { product, plan } = selected;
   const details = $('#purchase-order-details'); details.replaceChildren();
@@ -3175,6 +3199,7 @@
   if (promoApplied) row(details, '优惠金额', '−' + money(quote().discount));
   $('#purchase-order-total').textContent = money(quote().total);
   if (demo) {
+   showPayment('review');
    demoConfirm.disabled = false;
    demoRecharge.hidden = true;
    demoStatus.textContent = '';
@@ -3185,21 +3210,40 @@
  if (demo) {
   demoConfirm.hidden = false;
   demoConfirm.addEventListener('click', () => {
+   if (demoConfirm.disabled || !dialog.open) return;
    const { product, plan } = selected;
-   const result = demo.purchase(product.id,{...plan,total:quote().total});
-   if (result.ok) {
-    demoConfirm.disabled = true;
-    window.location.assign(demo.url('/dashboard/orders'));
-   } else {
-    demoRecharge.hidden = result.reason !== 'balance';
-    demoStatus.textContent = result.reason === 'balance' ? '演示余额不足，请先模拟充值。' : demo.message(result);
-   }
+   const total = quote().total;
+   demoConfirm.disabled = true;
+   $('#purchase-payment-order').textContent = '—';
+   $('#purchase-payment-amount').textContent = money(total);
+   showPayment('pending').focus();
+   paymentTimer = window.setTimeout(() => {
+    if (!dialog.open) return;
+    const result = demo.purchase(product.id, {...plan, total});
+    if (!result.ok) {
+     showPayment('review');
+     demoConfirm.disabled = false;
+     demoRecharge.hidden = result.reason !== 'balance';
+     demoStatus.textContent = result.reason === 'balance' ? '演示余额不足，请先模拟充值。' : demo.message(result);
+     (demoRecharge.hidden ? demoConfirm : demoRecharge).focus();
+     return;
+    }
+    const { order } = result;
+    $('#purchase-payment-order').textContent = order.id;
+    $('#purchase-payment-amount').textContent = demo.money(order.costCents);
+    $('#purchase-payment-orders').href = demo.url('/dashboard/orders');
+    $('#purchase-payment-usage').href = demo.url('/dashboard/usage', {order:order.id});
+    showPayment('paid').focus();
+   }, 1650);
   });
  }
  function closeDialog() { if (dialog.open) dialog.close(); }
  $('#purchase-order-close').addEventListener('click', closeDialog);
  $('#purchase-order-edit').addEventListener('click', closeDialog);
- dialog.addEventListener('close', () => preview.focus());
+ dialog.addEventListener('close', () => {
+  window.clearTimeout(paymentTimer);
+  preview.focus();
+ });
  const outside = event => { const rect = dialog.getBoundingClientRect(); return event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom; };
  dialog.addEventListener('pointerdown', event => { backdrop = event.target === dialog && outside(event); });
  dialog.addEventListener('pointercancel', () => { backdrop = false; });

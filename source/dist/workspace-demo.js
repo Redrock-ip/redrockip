@@ -100,7 +100,6 @@
   const message = result => result.reason === 'storage'
     ? '浏览器无法保存演示数据，请允许本站使用本地存储。'
     : '此操作当前无法完成，请重新选择后再试。';
-  window.RedRockDemo = { ...store, url, selectedPlan, money, message };
   main.dataset.demo = 'active';
 
   for (const link of document.querySelectorAll('a[href]')) {
@@ -130,6 +129,14 @@
   lead.append(node('h2','购买流程演示'),
     node('p','使用演示余额选购套餐，订单和用量保存在此浏览器。'));
   const balance = node('strong','演示余额 ' + money(store.read().balanceCents),'demo-balance');
+  window.RedRockDemo = {
+    ...store, url, selectedPlan, money, message,
+    purchase(productId, plan) {
+      const result = store.purchase(productId, plan);
+      if (result.ok) balance.textContent = '演示余额 ' + money(result.state.balanceCents);
+      return result;
+    }
+  };
   guideTop.append(lead,balance);
   guide.append(guideTop);
   const steps = node('div',null,'demo-links');

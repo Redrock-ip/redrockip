@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#090708">
+  <meta name="robots" content="noindex">
+  <title>付款状态方案 · REDROCK</title>
+  <link rel="icon" href="/assets/logo.jpg">
+  <link rel="stylesheet" href="/style.css">
+  <style>
+    body {
+      --accent: #ff8192;
+      --success: #a6ebc7;
+      --muted: #d4b9c2;
+      --border: #452d37;
+      min-height: 100svh;
+      background: radial-gradient(ellipse at 55% 0%, #291019, transparent 38rem), #090708;
+    }
+
+    .options-header {
+      position: static;
+      width: min(100% - 32px, 1040px);
+      height: 70px;
+      padding-inline: 0;
+      border-color: #ffffff17;
+      background: transparent;
+    }
+    .options-header .original-logo { width: 34px; height: 34px; }
+    .options-main { width: min(100% - 32px, 1040px); margin: 0 auto; padding: clamp(22px, 4vw, 44px) 0 36px; }
+    .options-heading { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 14px 20px; margin-bottom: 22px; }
+    .options-heading h1 { margin: 0 0 5px; font-size: clamp(26px, 4vw, 38px); line-height: 1.2; }
+    .options-heading p { margin: 0; color: var(--muted); }
+    .options-controls { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; }
+    .options-controls button {
+      min-height: 42px;
+      padding: 6px 12px;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      background: #1c1219;
+      color: #f3dce4;
+      font-size: 13px;
+    }
+    .options-controls button:hover { border-color: var(--accent); }
+    .options-controls button[aria-pressed="true"] { background: #472030; border-color: #af5e74; color: #fff2f6; }
+    .options-controls button[data-play] { background: #a92239; border-color: #d8596d; color: #fff; }
+    .options-controls button[data-play]:hover { background: #c02641; }
+
+    .options-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+    .option {
+      min-width: 0;
+      min-height: 228px;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 12px;
+      padding: 15px 19px;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      background: #150f14;
+    }
+    .option-name { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding-bottom: 10px; border-bottom: 1px solid #ffffff12; }
+    .option-name h2 { margin: 0; color: #f7e4eb; font-size: 14px; line-height: 1.4; }
+    .option-name span { color: var(--muted); font-size: 12px; white-space: nowrap; }
+    .option h3 { margin: 0; color: #fff3f6; font-size: 19px; line-height: 1.25; }
+    .option p { margin: 4px 0 0; color: var(--muted); font-size: 13px; }
+    .option-body { align-self: center; }
+    .option-centered { display: grid; justify-items: center; text-align: center; }
+    .option-inline { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
+    .option-order { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 4px 14px; margin: 0; padding: 8px 10px; border-radius: 7px; background: #21151d; }
+    .option-order div { display: flex; align-items: baseline; gap: 7px; }
+    .option-order dt { font-size: 12px; color: var(--muted); }
+    .option-order dd { margin: 0; color: #fff1f5; font-weight: 600; font-variant-numeric: tabular-nums; }
+    .option-paid { display: none; }
+    .options-main[data-state="paid"] .option-waiting { display: none; }
+    .options-main[data-state="paid"] .option-paid { display: revert; }
+
+    .option-ring, .option-round-check { width: 42px; height: 42px; border-radius: 50%; margin-bottom: 9px; }
+    .option-ring { border: 3px solid #4d2a36; border-top-color: var(--accent); border-right-color: var(--accent); transform: rotate(-35deg); }
+    .options-main[data-state="paid"] .option-round-check { display: grid; place-items: center; color: var(--success); background: #21382e; }
+    .option-check { display: block; width: 17px; height: 10px; border-left: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: translateY(-2px) rotate(-45deg); }
+
+    .option-dots { display: inline-flex; gap: 5px; }
+    .option-dots i { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
+    .option-dots i:nth-child(2) { opacity: .65; }
+    .option-dots i:nth-child(3) { opacity: .4; }
+    .options-main[data-state="paid"] .option-status {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 4px 9px;
+      border-radius: 99px;
+      background: #21382e;
+      color: var(--success);
+      font-size: 13px;
+    }
+    .option-status .option-check, .option-step-check .option-check { width: 10px; height: 6px; }
+
+    .option-steps { display: grid; gap: 9px; padding: 0; margin: 10px 0 0; list-style: none; }
+    .option-steps li { display: flex; align-items: center; gap: 8px; min-height: 20px; font-size: 13px; }
+    .option-steps li:first-child { color: var(--muted); }
+    .option-step-check, .option-step-ring { width: 20px; height: 20px; flex: none; border-radius: 50%; }
+    .option-step-check { display: grid; place-items: center; background: #21382e; color: var(--success); }
+    .option-step-check.option-paid { display: none; }
+    .options-main[data-state="paid"] .option-step-check.option-paid { display: grid; }
+    .option-step-ring { border: 2px solid #59303d; border-top-color: var(--accent); }
+
+    .option-receipt { display: grid; align-content: center; justify-items: center; text-align: center; }
+    .option-receipt .option-amount { margin-top: 5px; color: #fff2f7; font-size: 25px; font-weight: 700; line-height: 1.25; font-variant-numeric: tabular-nums; }
+    .option-meter { width: min(100%, 198px); height: 4px; margin: 10px 0 4px; overflow: hidden; border-radius: 4px; background: #432735; }
+    .option-meter span { display: block; width: 36%; height: 100%; transform: translateX(85%); border-radius: inherit; background: var(--accent); }
+    .options-main[data-state="paid"] .option-meter span { width: 100%; transform: none; background: var(--success); }
+    .option-receipt .option-ref { color: var(--muted); align-self: end; font-size: 12px; text-align: center; }
+    .options-announcement { position: absolute; clip-path: inset(50%); overflow: hidden; width: 1px; height: 1px; white-space: nowrap; }
+
+    @media (prefers-reduced-motion: no-preference) {
+      .options-main[data-state="pending"] .option-ring, .options-main[data-state="pending"] .option-step-ring { animation: options-rotate 1.15s linear 4; }
+      .options-main[data-state="pending"] .option-dots i { animation: options-bob .75s ease-in-out 6; }
+      .options-main[data-state="pending"] .option-dots i:nth-child(2) { animation-delay: .1s; }
+      .options-main[data-state="pending"] .option-dots i:nth-child(3) { animation-delay: .2s; }
+      .options-main[data-state="pending"] .option-meter span { animation: options-sweep 1.15s ease-in-out 4; }
+      .options-main[data-state="paid"] .option-round-check, .options-main[data-state="paid"] .option-status,
+      .options-main[data-state="paid"] .option-step-check.option-paid { animation: options-confirm .25s ease-out; }
+      @keyframes options-rotate { to { transform: rotate(325deg); } }
+      @keyframes options-bob { 50% { transform: translateY(-3px); opacity: 1; } }
+      @keyframes options-sweep { from { transform: translateX(-100%); } to { transform: translateX(280%); } }
+      @keyframes options-confirm { from { opacity: .35; transform: scale(.86); } }
+    }
+
+    @media (max-width: 640px) {
+      .options-grid { grid-template-columns: minmax(0, 1fr); }
+      .option { min-height: 208px; padding-inline: 14px; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#payment-options">跳转到方案对比</a>
+  <header class="options-header">
+    <a href="/" class="brand" aria-label="REDROCK 首页">
+      <img class="original-logo" src="/assets/logo.jpg" width="34" height="34" alt="">
+      <span class="original-wordmark"><span class="wordmark-red">RED</span><span class="wordmark-rock">ROCK</span></span>
+    </a>
+  </header>
+  <main id="payment-options" class="options-main" data-state="pending">
+    <div class="options-heading">
+      <div>
+        <h1>付款状态方案</h1>
+        <p>四种小窗，同步对比等待和成功效果。</p>
+      </div>
+      <div class="options-controls" role="group" aria-label="切换付款状态">
+        <button type="button" data-show="pending" aria-pressed="true">支付确认中</button>
+        <button type="button" data-show="paid" aria-pressed="false">支付成功</button>
+        <button type="button" data-play>播放切换</button>
+      </div>
+    </div>
+    <p class="options-announcement" role="status"></p>
+    <div class="options-grid">
+      <section class="option">
+        <div class="option-name"><h2>圆环与勾选</h2><span>示例订单</span></div>
+        <div class="option-body option-centered">
+          <div class="option-ring option-waiting" aria-hidden="true"></div>
+          <div class="option-round-check option-paid" aria-hidden="true"><i class="option-check"></i></div>
+          <h3><span class="option-waiting">正在确认支付</span><span class="option-paid">支付成功</span></h3>
+          <p><span class="option-waiting">等待收银台返回支付结果。</span><span class="option-paid">订单已确认收款。</span></p>
+        </div>
+        <dl class="option-order"><div><dt>订单编号</dt><dd>DEMO-P042</dd></div><div><dt>金额</dt><dd>$50.00</dd></div></dl>
+      </section>
+      <section class="option">
+        <div class="option-name"><h2>三点与状态标签</h2><span>示例订单</span></div>
+        <div class="option-body option-inline">
+          <div>
+            <h3><span class="option-waiting">正在确认支付</span><span class="option-paid">支付成功</span></h3>
+            <p><span class="option-waiting">收到结果后将自动更新。</span><span class="option-paid">订单已确认收款。</span></p>
+          </div>
+          <span class="option-dots option-waiting" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="option-status option-paid"><i class="option-check" aria-hidden="true"></i>已支付</span>
+        </div>
+        <dl class="option-order"><div><dt>订单编号</dt><dd>DEMO-P042</dd></div><div><dt>金额</dt><dd>$50.00</dd></div></dl>
+      </section>
+      <section class="option">
+        <div class="option-name"><h2>两步确认</h2><span>示例订单</span></div>
+        <div class="option-body">
+          <h3><span class="option-waiting">正在确认支付</span><span class="option-paid">支付成功</span></h3>
+          <ol class="option-steps">
+            <li><span class="option-step-check" aria-hidden="true"><i class="option-check"></i></span>已从收银台返回</li>
+            <li><span class="option-step-ring option-waiting" aria-hidden="true"></span><span class="option-step-check option-paid" aria-hidden="true"><i class="option-check"></i></span><span class="option-waiting">等待支付结果</span><span class="option-paid">支付结果已确认</span></li>
+          </ol>
+        </div>
+        <dl class="option-order"><div><dt>订单编号</dt><dd>DEMO-P042</dd></div><div><dt>金额</dt><dd>$50.00</dd></div></dl>
+      </section>
+      <section class="option">
+        <div class="option-name"><h2>横向进度条与回执</h2><span>示例订单</span></div>
+        <div class="option-receipt">
+          <h3><span class="option-waiting">正在确认支付</span><span class="option-paid">支付成功</span></h3>
+          <p class="option-amount">$50.00</p>
+          <div class="option-meter" aria-hidden="true"><span></span></div>
+          <p><span class="option-waiting">正在同步收银台结果</span><span class="option-paid">付款回执</span></p>
+        </div>
+        <div class="option-receipt"><span class="option-ref">订单 DEMO-P042</span></div>
+      </section>
+    </div>
+  </main>
+  <script>
+    (() => {
+      const options = document.getElementById('payment-options');
+      const buttons = [...options.querySelectorAll('[data-show]')];
+      const play = options.querySelector('[data-play]');
+      const announcement = options.querySelector('[role="status"]');
+      let previewTimer;
+      let animationFrame;
+
+      function show(state) {
+        options.dataset.state = state;
+        for (const button of buttons) {
+          button.setAttribute('aria-pressed', String(button.dataset.show === state));
+        }
+        announcement.textContent = state === 'paid' ? '四种方案都已显示支付成功。' : '四种方案都已显示支付确认中。';
+      }
+
+      function cancelPlayback() {
+        window.clearTimeout(previewTimer);
+        window.cancelAnimationFrame(animationFrame);
+        play.textContent = '播放切换';
+      }
+
+      for (const button of buttons) {
+        button.addEventListener('click', () => {
+          cancelPlayback();
+          show(button.dataset.show);
+        });
+      }
+
+      play.addEventListener('click', () => {
+        cancelPlayback();
+        options.dataset.state = '';
+        play.textContent = '重新播放';
+        // Restart the waiting animations even when that state is already selected.
+        animationFrame = window.requestAnimationFrame(() => {
+          animationFrame = window.requestAnimationFrame(() => {
+            show('pending');
+            previewTimer = window.setTimeout(() => {
+              show('paid');
+              play.textContent = '播放切换';
+            }, 1750);
+          });
+        });
+      });
+
+      if (new URLSearchParams(window.location.search).get('state') === 'paid') show('paid');
+    })();
+  </script>
+</body>
+</html>
